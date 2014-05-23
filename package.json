@@ -1,0 +1,30 @@
+{
+  "author": {
+    "name": "Soares Chen",
+    "email": "soares.chen@gmail.com",
+    "url": "http://soareschen.com"
+  },
+  "name": "quiver-http",
+  "desription": "HTTP utility library for processing HTTP requests in Quiver.",
+  "version": "0.0.1",
+  "homepage": "https://github.com/quiverjs/http",
+  "repository": {
+    "url": "git@github.com:quiverjs/http.git"
+  },
+  "dependencies": {
+    "quiver-merge": "~0.0.1",
+    "quiver-error": "~0.1.0"
+  },
+  "bugs": {
+    "url": "https://github.com/quiverjs/http/issues",
+    "email": "quiverjs@soareschen.com"
+  },
+  "licenses": {
+    "type": "MIT",
+    "url": "https://raw.github.com/quiverjs/license/master/LICENSE"
+  },
+  "main": "./lib/http",
+  "scripts": {
+    "test": "make test"
+  }
+}
