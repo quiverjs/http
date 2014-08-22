@@ -5,15 +5,21 @@
     "url": "http://soareschen.com"
   },
   "name": "quiver-http",
-  "desription": "HTTP utility library for processing HTTP requests in Quiver.",
-  "version": "0.0.1",
+  "desription": "Classes to represent HTTP request/response in Quiver",
+  "version": "1.0.0",
   "homepage": "https://github.com/quiverjs/http",
   "repository": {
     "url": "git@github.com:quiverjs/http.git"
   },
   "dependencies": {
-    "quiver-merge": "~0.0.1",
-    "quiver-error": "~0.1.0"
+    "traceur": "~0.0.55",
+    "quiver-object": "~1.0.0"
+  },
+  "devDependencies": {
+    "chai": "^1.9.1",
+    "gulp": "^3.8.1",
+    "mocha": "^1.20.1",
+    "gulp-traceur": "^0.7.0"
   },
   "bugs": {
     "url": "https://github.com/quiverjs/http/issues",
