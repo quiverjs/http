@@ -158,9 +158,11 @@ var $RequestHead = RequestHead;
     this._parsedQuery[assertString(key)] = assertString(value);
     this._modifiedQuery = true;
     this._modifiedUrl = true;
+    return this;
   },
   setArgs: function(key, value) {
     this._args[key] = value;
+    return this;
   },
   get args() {
     var args = copy(this._args);
@@ -174,7 +176,7 @@ var ResponseHead = function ResponseHead() {
   var rawHead = arguments[0] !== (void 0) ? arguments[0] : {};
   var $__1 = $traceurRuntime.assertObject(rawHead),
       statusCode = ($__2 = $__1.statusCode) === void 0 ? 200 : $__2,
-      statusMessage = ($__2 = $__1.statusMessage) === void 0 ? '' : $__2;
+      statusMessage = ($__2 = $__1.statusMessage) === void 0 ? 'OK' : $__2;
   this._statusCode = assertNumber(statusCode);
   this._statusMessage = assertRegex(statusMessage, valueRegex);
   $traceurRuntime.superCall(this, $ResponseHead.prototype, "constructor", [rawHead]);
@@ -185,7 +187,7 @@ var $ResponseHead = ResponseHead;
     return this._statusCode;
   },
   set statusCode(code) {
-    this._statusCode = assertNumber(statusCode);
+    this._statusCode = assertNumber(code);
   },
   get statusMessage() {
     return this._statusMessage;

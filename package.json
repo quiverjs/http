@@ -19,7 +19,8 @@
     "chai": "^1.9.1",
     "gulp": "^3.8.1",
     "mocha": "^1.20.1",
-    "gulp-traceur": "^0.7.0"
+    "gulp-traceur": "^0.7.0",
+    "chai-as-promised": "^4.1.1"
   },
   "bugs": {
     "url": "https://github.com/quiverjs/http/issues",
