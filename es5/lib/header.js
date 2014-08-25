@@ -15,6 +15,7 @@ var $__1 = $traceurRuntime.assertObject(require('url')),
 var $__1 = $traceurRuntime.assertObject(require('querystring')),
     parseQueryString = $__1.parse,
     queryStringify = $__1.stringify;
+var getStatusMessage = $traceurRuntime.assertObject(require('./status.js')).getStatusMessage;
 var assertString = (function(str) {
   if (typeof(str) != 'string')
     throw new Error('argument must be string');
@@ -74,7 +75,7 @@ var RequestHead = function RequestHead() {
   var $__1 = $traceurRuntime.assertObject(rawHead),
       method = ($__2 = $__1.method) === void 0 ? 'GET' : $__2,
       url = ($__2 = $__1.url) === void 0 ? '/' : $__2;
-  this._method = assertRegex(method, methodRegex);
+  this._method = assertRegex(method, methodRegex).toUpperCase();
   this._url = assertString(url);
   this._args = {};
   this._reset();
@@ -92,20 +93,31 @@ var $RequestHead = RequestHead;
     this._modifiedUrl = false;
     this._modifiedQuery = false;
     this._path = null;
+    this._protocol = null;
+    this._hostname = null;
+    this._port = null;
+    this._auth = null;
     this.__parsedUrl = null;
     this._queryString = null;
     this.__parsedQuery = null;
   },
-  get url() {
-    if (!this._modifiedUrl)
-      return this._url;
+  reformatUrl: function() {
     var url = this._url = formatUrl({
       pathname: this.path,
-      search: this.queryString
+      search: this.queryString,
+      protocol: this.protocol,
+      hostname: this.hostname,
+      port: this.port,
+      auth: this.auth
     });
     this._modifiedUrl = false;
     this.__parsedUrl = null;
     return url;
+  },
+  get url() {
+    if (!this._modifiedUrl)
+      return this._url;
+    return this.reformatUrl();
   },
   set url(newUrl) {
     this._url = newUrl;
@@ -116,6 +128,11 @@ var $RequestHead = RequestHead;
       return this.__parsedUrl;
     var parsed = this.__parsedUrl = parseUrl(this._url);
     return parsed;
+  },
+  get urlComponents() {
+    if (this._modifiedUrl)
+      this.reformatUrl();
+    return copy(this._parsedUrl);
   },
   get path() {
     if (this._path)
@@ -171,12 +188,34 @@ var $RequestHead = RequestHead;
     return args;
   }
 }, {}, HttpHead);
+var mixinUrlComponent = (function(prototype, field) {
+  var urlField = arguments[2] !== (void 0) ? arguments[2] : field;
+  var defaultValue = arguments[3] !== (void 0) ? arguments[3] : null;
+  var _field = '_' + field;
+  Object.defineProperty(prototype, field, {
+    get: function() {
+      if (this[_field] !== null)
+        return this[_field];
+      var value = this[_field] = this._parsedUrl[urlField] || defaultValue;
+      return value;
+    },
+    set: function(value) {
+      this[_field] = value;
+      this._modifiedUrl = true;
+      return this;
+    }
+  });
+});
+mixinUrlComponent(RequestHead.prototype, 'protocol');
+mixinUrlComponent(RequestHead.prototype, 'hostname');
+mixinUrlComponent(RequestHead.prototype, 'port');
+mixinUrlComponent(RequestHead.prototype, 'auth');
 var ResponseHead = function ResponseHead() {
   var $__2;
   var rawHead = arguments[0] !== (void 0) ? arguments[0] : {};
   var $__1 = $traceurRuntime.assertObject(rawHead),
       statusCode = ($__2 = $__1.statusCode) === void 0 ? 200 : $__2,
-      statusMessage = ($__2 = $__1.statusMessage) === void 0 ? 'OK' : $__2;
+      statusMessage = ($__2 = $__1.statusMessage) === void 0 ? getStatusMessage(statusCode) : $__2;
   this._statusCode = assertNumber(statusCode);
   this._statusMessage = assertRegex(statusMessage, valueRegex);
   $traceurRuntime.superCall(this, $ResponseHead.prototype, "constructor", [rawHead]);

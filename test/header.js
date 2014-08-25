@@ -100,6 +100,19 @@ describe('http header test', () => {
     requestHead.query.foo.should.equal('baz')
   })
 
+  it('request head test 6', () => {
+    var requestHead = new RequestHead({
+      url: 'http://localhost:8080/api/path?foo=bar'
+    })
+
+    requestHead.protocol.should.equal('http:')
+    requestHead.hostname.should.equal('localhost')
+    requestHead.port.should.equal('8080')
+    requestHead.path.should.equal('/api/path')
+    requestHead.queryString.should.equal('foo=bar')
+    requestHead.query.foo.should.equal('bar')
+  })
+
   it('request head copy fields test', () => {
     var requestHead = new RequestHead({
       url: '/api/path?foo=bar',
