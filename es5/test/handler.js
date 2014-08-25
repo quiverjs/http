@@ -296,13 +296,15 @@ describe('node handler test', (function() {
       while (true)
         switch ($ctx.state) {
           case 0:
-            handler = async($traceurRuntime.initGeneratorFunction(function $__24(requestHead, streamable) {
+            handler = async($traceurRuntime.initGeneratorFunction(function $__24(args, streamable) {
+              var requestHead;
               return $traceurRuntime.createGeneratorInstance(function($ctx) {
                 while (true)
                   switch ($ctx.state) {
                     case 0:
+                      requestHead = $traceurRuntime.assertObject(args).requestHead;
+                      args.path.should.equal('/get-path');
                       requestHead.method.should.equal('GET');
-                      requestHead.path.should.equal('/get-path');
                       requestHead.query.foo.should.equal('bar');
                       $ctx.state = 8;
                       break;
@@ -314,7 +316,7 @@ describe('node handler test', (function() {
                       $ctx.state = 4;
                       break;
                     case 4:
-                      $ctx.returnValue = [new ResponseHead(), textToStreamable('Hello World')];
+                      $ctx.returnValue = textToStreamable('Hello World');
                       $ctx.state = -2;
                       break;
                     default:
@@ -323,7 +325,7 @@ describe('node handler test', (function() {
               }, $__24, this);
             }));
             component = {handleableBuilder: (function(config) {
-                return ({httpHandler: handler});
+                return ({streamHandler: handler});
               })};
             port = testPort++;
             $ctx.state = 18;

@@ -12,11 +12,11 @@
     "url": "git@github.com:quiverjs/http.git"
   },
   "dependencies": {
+    "traceur": "~0.0.55",
     "quiver-error": "~0.1.0",
     "quiver-object": "~1.0.0",
     "quiver-promise": "~0.0.2",
-    "quiver-stream-util": "~1.0.0",
-    "traceur": "~0.0.55"
+    "quiver-stream-util": "~1.0.0"
   },
   "devDependencies": {
     "chai": "^1.9.1",
@@ -33,7 +33,7 @@
     "type": "MIT",
     "url": "https://raw.github.com/quiverjs/license/master/LICENSE"
   },
-  "main": "./lib/http",
+  "main": "./index.js",
   "scripts": {
     "test": "make test"
   }

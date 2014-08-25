@@ -115,20 +115,23 @@ describe('node handler test', () => {
   }))
 
   it('server test', async(function*() {
-    var handler = async(function*(requestHead, streamable) {
+    var handler = async(function*(args, streamable) {
+      var { requestHead } = args
+      
+      args.path.should.equal('/get-path')
+
       requestHead.method.should.equal('GET')
-      requestHead.path.should.equal('/get-path')
       requestHead.query.foo.should.equal('bar')
 
       yield streamableToText(streamable)
         .should.eventually.equal('')
 
-      return [new ResponseHead(), textToStreamable('Hello World')]
+      return textToStreamable('Hello World')
     })
 
     var component = {
       handleableBuilder: config => ({
-        httpHandler: handler
+        streamHandler: handler
       })
     }
 
