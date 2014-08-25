@@ -21,6 +21,9 @@ Object.defineProperties(exports, {
   getRequest: {get: function() {
       return getRequest;
     }},
+  startServer: {get: function() {
+      return startServer;
+    }},
   __esModule: {value: true}
 });
 var $__0 = $traceurRuntime.assertObject(require('./header.js')),
@@ -33,4 +36,5 @@ var $__0 = $traceurRuntime.assertObject(require('./handler.js')),
 var $__0 = $traceurRuntime.assertObject(require('./subrequest.js')),
     subrequest = $__0.subrequest,
     getRequest = $__0.getRequest;
+var startServer = $traceurRuntime.assertObject(require('./server.js')).startServer;
 ;

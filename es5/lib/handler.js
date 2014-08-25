@@ -63,7 +63,6 @@ var httpToNodeHandler = (function(httpHandler) {
         return pipeStream(responseStream, responseWrite);
       }));
     })).catch((function(err) {
-      console.log('error in handler', err.stack);
       if (!response.headersSents) {
         var errorCode = err.errorCode || 500;
         response.writeHead(errorCode, {'Content-Length': 0});
