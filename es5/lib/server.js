@@ -10,23 +10,26 @@ var async = $traceurRuntime.assertObject(require('quiver-promise')).async;
 var $__0 = $traceurRuntime.assertObject(require('./handler.js')),
     httpToNodeHandler = $__0.httpToNodeHandler,
     streamToHttpHandler = $__0.streamToHttpHandler;
-var startServer = async($traceurRuntime.initGeneratorFunction(function $__1(component, config, listenOptions) {
-  var builder,
+var startServer = async($traceurRuntime.initGeneratorFunction(function $__2(component, config) {
+  var $__1,
+      builder,
       $__0,
+      serverListen,
       streamHandler,
       httpHandler,
       handler,
-      $__2,
       $__3,
       $__4,
       $__5,
       $__6,
-      $__7;
+      $__7,
+      $__8;
   return $traceurRuntime.createGeneratorInstance(function($ctx) {
     while (true)
       switch ($ctx.state) {
         case 0:
           builder = component.handleableBuilder;
+          $__0 = $traceurRuntime.assertObject(config), serverListen = ($__1 = $__0.serverListen) === void 0 ? 8080 : $__1;
           if (!builder)
             throw new Error('Component do not have handleableBuilder');
           if (!config)
@@ -34,24 +37,24 @@ var startServer = async($traceurRuntime.initGeneratorFunction(function $__1(comp
           $ctx.state = 12;
           break;
         case 12:
-          $__2 = $traceurRuntime.assertObject;
-          $__3 = builder(config);
+          $__3 = $traceurRuntime.assertObject;
+          $__4 = builder(config);
           $ctx.state = 6;
           break;
         case 6:
           $ctx.state = 2;
-          return $__3;
+          return $__4;
         case 2:
-          $__4 = $ctx.sent;
+          $__5 = $ctx.sent;
           $ctx.state = 4;
           break;
         case 4:
-          $__5 = $__2.call($traceurRuntime, $__4);
-          $__0 = $__5;
-          $__6 = $__0.streamHandler;
-          streamHandler = $__6;
-          $__7 = $__0.httpHandler;
-          httpHandler = $__7;
+          $__6 = $__3.call($traceurRuntime, $__5);
+          $__0 = $__6;
+          $__7 = $__0.streamHandler;
+          streamHandler = $__7;
+          $__8 = $__0.httpHandler;
+          httpHandler = $__8;
           $ctx.state = 8;
           break;
         case 8:
@@ -61,11 +64,11 @@ var startServer = async($traceurRuntime.initGeneratorFunction(function $__1(comp
           $ctx.state = 14;
           break;
         case 14:
-          $ctx.returnValue = createServer(httpToNodeHandler(handler)).listen(listenOptions);
+          $ctx.returnValue = createServer(httpToNodeHandler(handler)).listen(serverListen);
           $ctx.state = -2;
           break;
         default:
           return $ctx.end();
       }
-  }, $__1, this);
+  }, $__2, this);
 }));

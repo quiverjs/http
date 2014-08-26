@@ -136,7 +136,10 @@ describe('node handler test', () => {
     }
 
     var port = testPort++
-    var server = yield startServer(component, { }, port)
+    var config = {
+      serverListen: port
+    }
+    var server = yield startServer(component, config)
 
     var [responseHead, responseStream] = yield getRequest(
       'http://localhost:' + port + '/get-path?foo=bar')

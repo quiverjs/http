@@ -282,6 +282,7 @@ describe('node handler test', (function() {
     var handler,
         component,
         port,
+        config,
         server,
         $__0,
         responseHead,
@@ -328,11 +329,12 @@ describe('node handler test', (function() {
                 return ({streamHandler: handler});
               })};
             port = testPort++;
+            config = {serverListen: port};
             $ctx.state = 18;
             break;
           case 18:
             $ctx.state = 2;
-            return startServer(component, {}, port);
+            return startServer(component, config);
           case 2:
             server = $ctx.sent;
             $ctx.state = 4;
