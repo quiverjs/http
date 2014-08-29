@@ -80,6 +80,7 @@ var RequestHead = function RequestHead() {
   this._args = {};
   this._reset();
   $traceurRuntime.superCall(this, $RequestHead.prototype, "constructor", [rawHead]);
+  this._args.path = this.path, this._args.requestHead = this;
 };
 var $RequestHead = RequestHead;
 ($traceurRuntime.createClass)(RequestHead, {
@@ -137,11 +138,11 @@ var $RequestHead = RequestHead;
   get path() {
     if (this._path)
       return this._path;
-    var path = this._path = this._parsedUrl.pathname;
-    return path;
+    return this.args.path = this._path = this._parsedUrl.pathname;
   },
   set path(newPath) {
     this._path = assertString(newPath);
+    this.args.path = newPath;
     this._modifiedUrl = true;
   },
   get queryString() {
@@ -182,10 +183,7 @@ var $RequestHead = RequestHead;
     return this;
   },
   get args() {
-    var args = copy(this._args);
-    args.path = this.path;
-    args.requestHead = this;
-    return args;
+    return this._args;
   }
 }, {}, HttpHead);
 var mixinUrlComponent = (function(prototype, field) {
