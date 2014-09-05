@@ -8,14 +8,20 @@ Object.defineProperties(exports, {
     }},
   __esModule: {value: true}
 });
-var copy = $traceurRuntime.assertObject(require('quiver-object')).copy;
-var $__1 = $traceurRuntime.assertObject(require('url')),
-    parseUrl = $__1.parse,
-    formatUrl = $__1.format;
-var $__1 = $traceurRuntime.assertObject(require('querystring')),
-    parseQueryString = $__1.parse,
-    queryStringify = $__1.stringify;
-var getStatusMessage = $traceurRuntime.assertObject(require('./status.js')).getStatusMessage;
+var $__quiver_45_object__,
+    $__url__,
+    $__querystring__,
+    $__status_46_js__;
+var copy = ($__quiver_45_object__ = require("quiver-object"), $__quiver_45_object__ && $__quiver_45_object__.__esModule && $__quiver_45_object__ || {default: $__quiver_45_object__}).copy;
+var urlLib = ($__url__ = require("url"), $__url__ && $__url__.__esModule && $__url__ || {default: $__url__}).default;
+var $__5 = urlLib,
+    parseUrl = $__5.parse,
+    formatUrl = $__5.format;
+var qs = ($__querystring__ = require("querystring"), $__querystring__ && $__querystring__.__esModule && $__querystring__ || {default: $__querystring__}).default;
+var $__5 = qs,
+    parseQueryString = $__5.parse,
+    queryStringify = $__5.stringify;
+var getStatusMessage = ($__status_46_js__ = require("./status.js"), $__status_46_js__ && $__status_46_js__.__esModule && $__status_46_js__ || {default: $__status_46_js__}).getStatusMessage;
 var assertString = (function(str) {
   if (typeof(str) != 'string')
     throw new Error('argument must be string');
@@ -35,10 +41,10 @@ var fieldRegex = /[^a-zA-Z\-]/;
 var valueRegex = /[^\x20-\x7E]/;
 var methodRegex = /[^a-zA-Z]/;
 var HttpHead = function HttpHead() {
-  var $__2;
+  var $__6;
   var rawHead = arguments[0] !== (void 0) ? arguments[0] : {};
-  var $__1 = $traceurRuntime.assertObject(rawHead),
-      httpVersion = ($__2 = $__1.httpVersion) === void 0 ? '1.1' : $__2;
+  var $__5 = rawHead,
+      httpVersion = ($__6 = $__5.httpVersion) === void 0 ? '1.1' : $__6;
   this._httpVersion = httpVersion;
   if (rawHead.headers) {
     var rawHeaders = rawHead.headers;
@@ -70,11 +76,12 @@ var HttpHead = function HttpHead() {
   }
 }, {});
 var RequestHead = function RequestHead() {
-  var $__2;
+  var $__5,
+      $__7;
   var rawHead = arguments[0] !== (void 0) ? arguments[0] : {};
-  var $__1 = $traceurRuntime.assertObject(rawHead),
-      method = ($__2 = $__1.method) === void 0 ? 'GET' : $__2,
-      url = ($__2 = $__1.url) === void 0 ? '/' : $__2;
+  var $__6 = rawHead,
+      method = ($__5 = $__6.method) === void 0 ? 'GET' : $__5,
+      url = ($__7 = $__6.url) === void 0 ? '/' : $__7;
   this._method = assertRegex(method, methodRegex).toUpperCase();
   this._url = assertString(url);
   this._args = {};
@@ -209,11 +216,12 @@ mixinUrlComponent(RequestHead.prototype, 'hostname');
 mixinUrlComponent(RequestHead.prototype, 'port');
 mixinUrlComponent(RequestHead.prototype, 'auth');
 var ResponseHead = function ResponseHead() {
-  var $__2;
+  var $__7,
+      $__6;
   var rawHead = arguments[0] !== (void 0) ? arguments[0] : {};
-  var $__1 = $traceurRuntime.assertObject(rawHead),
-      statusCode = ($__2 = $__1.statusCode) === void 0 ? 200 : $__2,
-      statusMessage = ($__2 = $__1.statusMessage) === void 0 ? getStatusMessage(statusCode) : $__2;
+  var $__5 = rawHead,
+      statusCode = ($__7 = $__5.statusCode) === void 0 ? 200 : $__7,
+      statusMessage = ($__6 = $__5.statusMessage) === void 0 ? getStatusMessage(statusCode) : $__6;
   this._statusCode = assertNumber(statusCode);
   this._statusMessage = assertRegex(statusMessage, valueRegex);
   $traceurRuntime.superCall(this, $ResponseHead.prototype, "constructor", [rawHead]);

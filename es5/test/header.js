@@ -1,12 +1,15 @@
 "use strict";
-require('traceur');
-var $__0 = $traceurRuntime.assertObject(require('../lib/http.js')),
+var $__traceur_64_0_46_0_46_58__,
+    $___46__46__47_lib_47_http_46_js__,
+    $__quiver_45_stream_45_util__;
+($__traceur_64_0_46_0_46_58__ = require("traceur"), $__traceur_64_0_46_0_46_58__ && $__traceur_64_0_46_0_46_58__.__esModule && $__traceur_64_0_46_0_46_58__ || {default: $__traceur_64_0_46_0_46_58__});
+var $__0 = ($___46__46__47_lib_47_http_46_js__ = require("../lib/http.js"), $___46__46__47_lib_47_http_46_js__ && $___46__46__47_lib_47_http_46_js__.__esModule && $___46__46__47_lib_47_http_46_js__ || {default: $___46__46__47_lib_47_http_46_js__}),
     RequestHead = $__0.RequestHead,
     ResponseHead = $__0.ResponseHead,
     streamToHttpHandler = $__0.streamToHttpHandler;
-var $__0 = $traceurRuntime.assertObject(require('quiver-stream-util')),
-    streamableToText = $__0.streamableToText,
-    textToStreamable = $__0.textToStreamable;
+var $__1 = ($__quiver_45_stream_45_util__ = require("quiver-stream-util"), $__quiver_45_stream_45_util__ && $__quiver_45_stream_45_util__.__esModule && $__quiver_45_stream_45_util__ || {default: $__quiver_45_stream_45_util__}),
+    streamableToText = $__1.streamableToText,
+    textToStreamable = $__1.textToStreamable;
 var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
@@ -83,7 +86,7 @@ describe('http header test', (function() {
     });
     requestHead.getHeader('X-Foo').should.equal('Bar');
     requestHead.getHeader('x-FOO').should.equal('Bar');
-    var headers = $traceurRuntime.assertObject(requestHead).headers;
+    var headers = requestHead.headers;
     headers['x-foo'].should.equal('Bar');
     headers['x-foo'] = 'BAZ';
     requestHead.getHeader('X-Foo').should.equal('Bar');
@@ -94,7 +97,7 @@ describe('http header test', (function() {
       headers: {'X-Foo': 'Bar'}
     });
     requestHead.setArgs('foo', 'baz');
-    var args = $traceurRuntime.assertObject(requestHead).args;
+    var args = requestHead.args;
     args.path.should.equal('/api/path');
     args.foo.should.equal('baz');
     args.requestHead.query.foo.should.equal('bar');
@@ -136,9 +139,10 @@ describe('http header test', (function() {
       method: 'POST',
       url: '/api/hello?foo=bar'
     }).setHeader('content-type', 'text/html');
-    return httpHandler(requestHead, textToStreamable('Hello')).then((function($__0) {
-      var responseHead = $__0[0],
-          responseStreamable = $__0[1];
+    return httpHandler(requestHead, textToStreamable('Hello')).then((function($__2) {
+      var $__3 = $__2,
+          responseHead = $__3[0],
+          responseStreamable = $__3[1];
       responseHead.statusCode.should.equal(200);
       responseHead.statusMessage.should.equal('OK');
       responseHead.getHeader('content-type').should.equal('text/plain');

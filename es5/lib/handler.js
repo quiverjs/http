@@ -8,14 +8,16 @@ Object.defineProperties(exports, {
     }},
   __esModule: {value: true}
 });
-var $__0 = $traceurRuntime.assertObject(require('./header.js')),
+var $__header_46_js__,
+    $__quiver_45_stream_45_util__;
+var $__0 = ($__header_46_js__ = require("./header.js"), $__header_46_js__ && $__header_46_js__.__esModule && $__header_46_js__ || {default: $__header_46_js__}),
     RequestHead = $__0.RequestHead,
     ResponseHead = $__0.ResponseHead;
-var $__0 = $traceurRuntime.assertObject(require('quiver-stream-util')),
-    pipeStream = $__0.pipeStream,
-    streamToStreamable = $__0.streamToStreamable,
-    nodeToQuiverReadStream = $__0.nodeToQuiverReadStream,
-    nodeToQuiverWriteStream = $__0.nodeToQuiverWriteStream;
+var $__1 = ($__quiver_45_stream_45_util__ = require("quiver-stream-util"), $__quiver_45_stream_45_util__ && $__quiver_45_stream_45_util__.__esModule && $__quiver_45_stream_45_util__ || {default: $__quiver_45_stream_45_util__}),
+    pipeStream = $__1.pipeStream,
+    streamToStreamable = $__1.streamToStreamable,
+    nodeToQuiverReadStream = $__1.nodeToQuiverReadStream,
+    nodeToQuiverWriteStream = $__1.nodeToQuiverWriteStream;
 var streamToHttpHandler = (function(streamHandler) {
   return (function(requestHead, requestStreamable) {
     var args = requestHead.args;
@@ -27,9 +29,9 @@ var streamToHttpHandler = (function(streamHandler) {
       requestStreamable.contentLength = contentLength;
     return streamHandler(args, requestStreamable).then((function(resultStreamable) {
       var responseHead = new ResponseHead();
-      var $__0 = $traceurRuntime.assertObject(resultStreamable),
-          contentType = $__0.contentType,
-          contentLength = $__0.contentLength;
+      var $__2 = resultStreamable,
+          contentType = $__2.contentType,
+          contentLength = $__2.contentLength;
       if (contentType) {
         responseHead.setHeader('content-type', contentType);
       }
@@ -50,9 +52,10 @@ var httpToNodeHandler = (function(httpHandler) {
     });
     requestHead.setArgs('clientAddress', request.connection.remoteAddress);
     var requestStreamable = streamToStreamable(nodeToQuiverReadStream(request));
-    return httpHandler(requestHead, requestStreamable).then((function($__0) {
-      var responseHead = $__0[0],
-          responseStreamable = $__0[1];
+    return httpHandler(requestHead, requestStreamable).then((function($__2) {
+      var $__3 = $__2,
+          responseHead = $__3[0],
+          responseStreamable = $__3[1];
       return responseStreamable.toStream().then((function(responseStream) {
         var headers = responseHead.headers;
         for (var key in headers) {

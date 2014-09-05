@@ -7,9 +7,9 @@ import {
   startServer
 } from '../lib/http.js'
 
-import { 
-  createServer
-} from 'http'
+import http from 'http'
+
+var { createServer } = http
 
 import { async, timeout, reject } from 'quiver-promise'
 import { error } from 'quiver-error'

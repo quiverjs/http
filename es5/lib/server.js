@@ -5,31 +5,33 @@ Object.defineProperties(exports, {
     }},
   __esModule: {value: true}
 });
-var createServer = $traceurRuntime.assertObject(require('http')).createServer;
-var async = $traceurRuntime.assertObject(require('quiver-promise')).async;
-var $__0 = $traceurRuntime.assertObject(require('./handler.js')),
-    httpToNodeHandler = $__0.httpToNodeHandler,
-    streamToHttpHandler = $__0.streamToHttpHandler;
-var startServer = async($traceurRuntime.initGeneratorFunction(function $__2(component, config) {
-  var $__1,
+var $__http__,
+    $__quiver_45_promise__,
+    $__handler_46_js__;
+var http = ($__http__ = require("http"), $__http__ && $__http__.__esModule && $__http__ || {default: $__http__}).default;
+var async = ($__quiver_45_promise__ = require("quiver-promise"), $__quiver_45_promise__ && $__quiver_45_promise__.__esModule && $__quiver_45_promise__ || {default: $__quiver_45_promise__}).async;
+var createServer = http.createServer;
+var $__2 = ($__handler_46_js__ = require("./handler.js"), $__handler_46_js__ && $__handler_46_js__.__esModule && $__handler_46_js__ || {default: $__handler_46_js__}),
+    httpToNodeHandler = $__2.httpToNodeHandler,
+    streamToHttpHandler = $__2.streamToHttpHandler;
+var startServer = async($traceurRuntime.initGeneratorFunction(function $__5(component, config) {
+  var $__4,
       builder,
-      $__0,
+      $__3,
       serverListen,
       streamHandler,
       httpHandler,
       handler,
-      $__3,
-      $__4,
-      $__5,
       $__6,
       $__7,
-      $__8;
+      $__8,
+      $__9;
   return $traceurRuntime.createGeneratorInstance(function($ctx) {
     while (true)
       switch ($ctx.state) {
         case 0:
           builder = component.handleableBuilder;
-          $__0 = $traceurRuntime.assertObject(config), serverListen = ($__1 = $__0.serverListen) === void 0 ? 8080 : $__1;
+          $__3 = config, serverListen = ($__4 = $__3.serverListen) === void 0 ? 8080 : $__4;
           if (!builder)
             throw new Error('Component do not have handleableBuilder');
           if (!config)
@@ -37,24 +39,22 @@ var startServer = async($traceurRuntime.initGeneratorFunction(function $__2(comp
           $ctx.state = 12;
           break;
         case 12:
-          $__3 = $traceurRuntime.assertObject;
-          $__4 = builder(config);
+          $__6 = builder(config);
           $ctx.state = 6;
           break;
         case 6:
           $ctx.state = 2;
-          return $__4;
+          return $__6;
         case 2:
-          $__5 = $ctx.sent;
+          $__7 = $ctx.sent;
           $ctx.state = 4;
           break;
         case 4:
-          $__6 = $__3.call($traceurRuntime, $__5);
-          $__0 = $__6;
-          $__7 = $__0.streamHandler;
-          streamHandler = $__7;
-          $__8 = $__0.httpHandler;
-          httpHandler = $__8;
+          $__3 = $__7;
+          $__8 = $__3.streamHandler;
+          streamHandler = $__8;
+          $__9 = $__3.httpHandler;
+          httpHandler = $__9;
           $ctx.state = 8;
           break;
         case 8:
@@ -70,5 +70,5 @@ var startServer = async($traceurRuntime.initGeneratorFunction(function $__2(comp
         default:
           return $ctx.end();
       }
-  }, $__2, this);
+  }, $__5, this);
 }));

@@ -14,24 +14,26 @@ Object.defineProperties(exports, {
     }},
   __esModule: {value: true}
 });
-var $__0 = $traceurRuntime.assertObject(require('./header.js')),
+var $__header_46_js__,
+    $__quiver_45_stream_45_util__;
+var $__0 = ($__header_46_js__ = require("./header.js"), $__header_46_js__ && $__header_46_js__.__esModule && $__header_46_js__ || {default: $__header_46_js__}),
     RequestHead = $__0.RequestHead,
     ResponseHead = $__0.ResponseHead;
-var $__0 = $traceurRuntime.assertObject(require('quiver-stream-util')),
-    pipeStream = $__0.pipeStream,
-    streamToStreamable = $__0.streamToStreamable,
-    nodeToQuiverReadStream = $__0.nodeToQuiverReadStream,
-    nodeToQuiverWriteStream = $__0.nodeToQuiverWriteStream;
+var $__1 = ($__quiver_45_stream_45_util__ = require("quiver-stream-util"), $__quiver_45_stream_45_util__ && $__quiver_45_stream_45_util__.__esModule && $__quiver_45_stream_45_util__ || {default: $__quiver_45_stream_45_util__}),
+    pipeStream = $__1.pipeStream,
+    streamToStreamable = $__1.streamToStreamable,
+    nodeToQuiverReadStream = $__1.nodeToQuiverReadStream,
+    nodeToQuiverWriteStream = $__1.nodeToQuiverWriteStream;
 var http = require('http');
 var requestHeadToOptions = (function(requestHead) {
-  var $__0 = $traceurRuntime.assertObject(requestHead),
-      auth = $__0.auth,
-      hostname = $__0.hostname,
-      port = $__0.port,
-      method = $__0.method,
-      path = $__0.path,
-      queryString = $__0.queryString,
-      headers = $__0.headers;
+  var $__2 = requestHead,
+      auth = $__2.auth,
+      hostname = $__2.hostname,
+      port = $__2.port,
+      method = $__2.method,
+      path = $__2.path,
+      queryString = $__2.queryString,
+      headers = $__2.headers;
   return {
     auth: auth,
     hostname: hostname,
