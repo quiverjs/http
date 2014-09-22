@@ -18,9 +18,9 @@ var $__5 = urlLib,
     parseUrl = $__5.parse,
     formatUrl = $__5.format;
 var qs = ($__querystring__ = require("querystring"), $__querystring__ && $__querystring__.__esModule && $__querystring__ || {default: $__querystring__}).default;
-var $__5 = qs,
-    parseQueryString = $__5.parse,
-    queryStringify = $__5.stringify;
+var $__6 = qs,
+    parseQueryString = $__6.parse,
+    queryStringify = $__6.stringify;
 var getStatusMessage = ($__status_46_js__ = require("./status.js"), $__status_46_js__ && $__status_46_js__.__esModule && $__status_46_js__ || {default: $__status_46_js__}).getStatusMessage;
 var assertString = (function(str) {
   if (typeof(str) != 'string')
@@ -41,10 +41,10 @@ var fieldRegex = /[^a-zA-Z\-]/;
 var valueRegex = /[^\x20-\x7E]/;
 var methodRegex = /[^a-zA-Z]/;
 var HttpHead = function HttpHead() {
-  var $__6;
+  var $__8;
   var rawHead = arguments[0] !== (void 0) ? arguments[0] : {};
-  var $__5 = rawHead,
-      httpVersion = ($__6 = $__5.httpVersion) === void 0 ? '1.1' : $__6;
+  var $__7 = rawHead,
+      httpVersion = ($__8 = $__7.httpVersion) === void 0 ? '1.1' : $__8;
   this._httpVersion = httpVersion;
   if (rawHead.headers) {
     var rawHeaders = rawHead.headers;
@@ -76,12 +76,12 @@ var HttpHead = function HttpHead() {
   }
 }, {});
 var RequestHead = function RequestHead() {
-  var $__5,
-      $__7;
+  var $__8,
+      $__9;
   var rawHead = arguments[0] !== (void 0) ? arguments[0] : {};
-  var $__6 = rawHead,
-      method = ($__5 = $__6.method) === void 0 ? 'GET' : $__5,
-      url = ($__7 = $__6.url) === void 0 ? '/' : $__7;
+  var $__7 = rawHead,
+      method = ($__8 = $__7.method) === void 0 ? 'GET' : $__8,
+      url = ($__9 = $__7.url) === void 0 ? '/' : $__9;
   this._method = assertRegex(method, methodRegex).toUpperCase();
   this._url = assertString(url);
   this._args = {};
@@ -216,12 +216,12 @@ mixinUrlComponent(RequestHead.prototype, 'hostname');
 mixinUrlComponent(RequestHead.prototype, 'port');
 mixinUrlComponent(RequestHead.prototype, 'auth');
 var ResponseHead = function ResponseHead() {
-  var $__7,
-      $__6;
+  var $__8,
+      $__9;
   var rawHead = arguments[0] !== (void 0) ? arguments[0] : {};
-  var $__5 = rawHead,
-      statusCode = ($__7 = $__5.statusCode) === void 0 ? 200 : $__7,
-      statusMessage = ($__6 = $__5.statusMessage) === void 0 ? getStatusMessage(statusCode) : $__6;
+  var $__7 = rawHead,
+      statusCode = ($__8 = $__7.statusCode) === void 0 ? 200 : $__8,
+      statusMessage = ($__9 = $__7.statusMessage) === void 0 ? getStatusMessage(statusCode) : $__9;
   this._statusCode = assertNumber(statusCode);
   this._statusMessage = assertRegex(statusMessage, valueRegex);
   $traceurRuntime.superCall(this, $ResponseHead.prototype, "constructor", [rawHead]);

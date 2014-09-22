@@ -1,11 +1,11 @@
 "use strict";
-var $__traceur_64_0_46_0_46_58__,
+var $__traceur_64_0_46_0_46_6__,
     $___46__46__47_lib_47_http_46_js__,
     $__http__,
     $__quiver_45_promise__,
     $__quiver_45_error__,
     $__quiver_45_stream_45_util__;
-($__traceur_64_0_46_0_46_58__ = require("traceur"), $__traceur_64_0_46_0_46_58__ && $__traceur_64_0_46_0_46_58__.__esModule && $__traceur_64_0_46_0_46_58__ || {default: $__traceur_64_0_46_0_46_58__});
+($__traceur_64_0_46_0_46_6__ = require("traceur"), $__traceur_64_0_46_0_46_6__ && $__traceur_64_0_46_0_46_6__.__esModule && $__traceur_64_0_46_0_46_6__ || {default: $__traceur_64_0_46_0_46_6__});
 var $__0 = ($___46__46__47_lib_47_http_46_js__ = require("../lib/http.js"), $___46__46__47_lib_47_http_46_js__ && $___46__46__47_lib_47_http_46_js__.__esModule && $___46__46__47_lib_47_http_46_js__ || {default: $___46__46__47_lib_47_http_46_js__}),
     RequestHead = $__0.RequestHead,
     ResponseHead = $__0.ResponseHead,
@@ -32,22 +32,22 @@ var should = chai.should();
 var expect = chai.expect;
 var testPort = 8100;
 describe('node handler test', (function() {
-  it('get request test', async($traceurRuntime.initGeneratorFunction(function $__6() {
+  it('get request test', async($traceurRuntime.initGeneratorFunction(function $__7() {
     var handler,
         port,
         server,
-        $__5,
+        $__6,
         responseHead,
         responseStream,
-        $__8,
         $__9,
         $__10,
-        $__11;
+        $__11,
+        $__12;
     return $traceurRuntime.createGeneratorInstance(function($ctx) {
       while (true)
         switch ($ctx.state) {
           case 0:
-            handler = async($traceurRuntime.initGeneratorFunction(function $__7(requestHead, streamable) {
+            handler = async($traceurRuntime.initGeneratorFunction(function $__8(requestHead, streamable) {
               return $traceurRuntime.createGeneratorInstance(function($ctx) {
                 while (true)
                   switch ($ctx.state) {
@@ -71,29 +71,29 @@ describe('node handler test', (function() {
                     default:
                       return $ctx.end();
                   }
-              }, $__7, this);
+              }, $__8, this);
             }));
             port = testPort++;
             server = createServer(httpToNodeHandler(handler)).listen(port);
             $ctx.state = 14;
             break;
           case 14:
-            $__8 = getRequest('http://localhost:' + port + '/get-path?foo=bar');
+            $__9 = getRequest('http://localhost:' + port + '/get-path?foo=bar');
             $ctx.state = 6;
             break;
           case 6:
             $ctx.state = 2;
-            return $__8;
+            return $__9;
           case 2:
-            $__9 = $ctx.sent;
+            $__10 = $ctx.sent;
             $ctx.state = 4;
             break;
           case 4:
-            $__5 = $__9;
-            $__10 = $__5[0];
-            responseHead = $__10;
-            $__11 = $__5[1];
-            responseStream = $__11;
+            $__6 = $__10;
+            $__11 = $__6[0];
+            responseHead = $__11;
+            $__12 = $__6[1];
+            responseStream = $__12;
             $ctx.state = 8;
             break;
           case 8:
@@ -115,26 +115,26 @@ describe('node handler test', (function() {
           default:
             return $ctx.end();
         }
-    }, $__6, this);
+    }, $__7, this);
   })));
-  it('post request test', async($traceurRuntime.initGeneratorFunction(function $__7() {
+  it('post request test', async($traceurRuntime.initGeneratorFunction(function $__8() {
     var handler,
         port,
         server,
         requestHead,
-        $__5,
+        $__6,
         responseHead,
         responseStream,
-        $__13,
         $__14,
         $__15,
         $__16,
-        $__17;
+        $__17,
+        $__18;
     return $traceurRuntime.createGeneratorInstance(function($ctx) {
       while (true)
         switch ($ctx.state) {
           case 0:
-            handler = async($traceurRuntime.initGeneratorFunction(function $__12(requestHead, streamable) {
+            handler = async($traceurRuntime.initGeneratorFunction(function $__13(requestHead, streamable) {
               return $traceurRuntime.createGeneratorInstance(function($ctx) {
                 while (true)
                   switch ($ctx.state) {
@@ -159,7 +159,7 @@ describe('node handler test', (function() {
                     default:
                       return $ctx.end();
                   }
-              }, $__12, this);
+              }, $__13, this);
             }));
             port = testPort++;
             server = createServer(httpToNodeHandler(handler)).listen(port);
@@ -171,23 +171,23 @@ describe('node handler test', (function() {
             $ctx.state = 14;
             break;
           case 14:
-            $__13 = textToStream('Hello');
-            $__14 = subrequest(requestHead, $__13);
+            $__14 = textToStream('Hello');
+            $__15 = subrequest(requestHead, $__14);
             $ctx.state = 6;
             break;
           case 6:
             $ctx.state = 2;
-            return $__14;
+            return $__15;
           case 2:
-            $__15 = $ctx.sent;
+            $__16 = $ctx.sent;
             $ctx.state = 4;
             break;
           case 4:
-            $__5 = $__15;
-            $__16 = $__5[0];
-            responseHead = $__16;
-            $__17 = $__5[1];
-            responseStream = $__17;
+            $__6 = $__16;
+            $__17 = $__6[0];
+            responseHead = $__17;
+            $__18 = $__6[1];
+            responseStream = $__18;
             $ctx.state = 8;
             break;
           case 8:
@@ -209,19 +209,19 @@ describe('node handler test', (function() {
           default:
             return $ctx.end();
         }
-    }, $__7, this);
+    }, $__8, this);
   })));
-  it('error test', async($traceurRuntime.initGeneratorFunction(function $__12() {
+  it('error test', async($traceurRuntime.initGeneratorFunction(function $__13() {
     var handler,
         port,
         server,
-        $__5,
+        $__6,
         responseHead,
         responseStream,
-        $__18,
         $__19,
         $__20,
-        $__21;
+        $__21,
+        $__22;
     return $traceurRuntime.createGeneratorInstance(function($ctx) {
       while (true)
         switch ($ctx.state) {
@@ -234,22 +234,22 @@ describe('node handler test', (function() {
             $ctx.state = 14;
             break;
           case 14:
-            $__18 = getRequest('http://localhost:' + port + '/');
+            $__19 = getRequest('http://localhost:' + port + '/');
             $ctx.state = 6;
             break;
           case 6:
             $ctx.state = 2;
-            return $__18;
+            return $__19;
           case 2:
-            $__19 = $ctx.sent;
+            $__20 = $ctx.sent;
             $ctx.state = 4;
             break;
           case 4:
-            $__5 = $__19;
-            $__20 = $__5[0];
-            responseHead = $__20;
-            $__21 = $__5[1];
-            responseStream = $__21;
+            $__6 = $__20;
+            $__21 = $__6[0];
+            responseHead = $__21;
+            $__22 = $__6[1];
+            responseStream = $__22;
             $ctx.state = 8;
             break;
           case 8:
@@ -271,26 +271,26 @@ describe('node handler test', (function() {
           default:
             return $ctx.end();
         }
-    }, $__12, this);
+    }, $__13, this);
   })));
-  it('server test', async($traceurRuntime.initGeneratorFunction(function $__22() {
+  it('server test', async($traceurRuntime.initGeneratorFunction(function $__23() {
     var handler,
         component,
         port,
         config,
         server,
-        $__5,
+        $__6,
         responseHead,
         responseStream,
-        $__24,
         $__25,
         $__26,
-        $__27;
+        $__27,
+        $__28;
     return $traceurRuntime.createGeneratorInstance(function($ctx) {
       while (true)
         switch ($ctx.state) {
           case 0:
-            handler = async($traceurRuntime.initGeneratorFunction(function $__23(args, streamable) {
+            handler = async($traceurRuntime.initGeneratorFunction(function $__24(args, streamable) {
               var requestHead;
               return $traceurRuntime.createGeneratorInstance(function($ctx) {
                 while (true)
@@ -316,7 +316,7 @@ describe('node handler test', (function() {
                     default:
                       return $ctx.end();
                   }
-              }, $__23, this);
+              }, $__24, this);
             }));
             component = {handleableBuilder: (function(config) {
                 return ({streamHandler: handler});
@@ -333,22 +333,22 @@ describe('node handler test', (function() {
             $ctx.state = 4;
             break;
           case 4:
-            $__24 = getRequest('http://localhost:' + port + '/get-path?foo=bar');
+            $__25 = getRequest('http://localhost:' + port + '/get-path?foo=bar');
             $ctx.state = 10;
             break;
           case 10:
             $ctx.state = 6;
-            return $__24;
+            return $__25;
           case 6:
-            $__25 = $ctx.sent;
+            $__26 = $ctx.sent;
             $ctx.state = 8;
             break;
           case 8:
-            $__5 = $__25;
-            $__26 = $__5[0];
-            responseHead = $__26;
-            $__27 = $__5[1];
-            responseStream = $__27;
+            $__6 = $__26;
+            $__27 = $__6[0];
+            responseHead = $__27;
+            $__28 = $__6[1];
+            responseStream = $__28;
             $ctx.state = 12;
             break;
           case 12:
@@ -370,6 +370,6 @@ describe('node handler test', (function() {
           default:
             return $ctx.end();
         }
-    }, $__22, this);
+    }, $__23, this);
   })));
 }));

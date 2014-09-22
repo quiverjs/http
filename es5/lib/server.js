@@ -14,24 +14,25 @@ var createServer = http.createServer;
 var $__2 = ($__handler_46_js__ = require("./handler.js"), $__handler_46_js__ && $__handler_46_js__.__esModule && $__handler_46_js__ || {default: $__handler_46_js__}),
     httpToNodeHandler = $__2.httpToNodeHandler,
     streamToHttpHandler = $__2.streamToHttpHandler;
-var startServer = async($traceurRuntime.initGeneratorFunction(function $__5(component, config) {
-  var $__4,
+var startServer = async($traceurRuntime.initGeneratorFunction(function $__7(component, config) {
+  var $__5,
       builder,
-      $__3,
+      $__4,
       serverListen,
+      $__6,
       streamHandler,
       httpHandler,
       handler,
-      $__6,
-      $__7,
       $__8,
-      $__9;
+      $__9,
+      $__10,
+      $__11;
   return $traceurRuntime.createGeneratorInstance(function($ctx) {
     while (true)
       switch ($ctx.state) {
         case 0:
           builder = component.handleableBuilder;
-          $__3 = config, serverListen = ($__4 = $__3.serverListen) === void 0 ? 8080 : $__4;
+          $__4 = config, serverListen = ($__5 = $__4.serverListen) === void 0 ? 8080 : $__5;
           if (!builder)
             throw new Error('Component do not have handleableBuilder');
           if (!config)
@@ -39,22 +40,22 @@ var startServer = async($traceurRuntime.initGeneratorFunction(function $__5(comp
           $ctx.state = 12;
           break;
         case 12:
-          $__6 = builder(config);
+          $__8 = builder(config);
           $ctx.state = 6;
           break;
         case 6:
           $ctx.state = 2;
-          return $__6;
+          return $__8;
         case 2:
-          $__7 = $ctx.sent;
+          $__9 = $ctx.sent;
           $ctx.state = 4;
           break;
         case 4:
-          $__3 = $__7;
-          $__8 = $__3.streamHandler;
-          streamHandler = $__8;
-          $__9 = $__3.httpHandler;
-          httpHandler = $__9;
+          $__6 = $__9;
+          $__10 = $__6.streamHandler;
+          streamHandler = $__10;
+          $__11 = $__6.httpHandler;
+          httpHandler = $__11;
           $ctx.state = 8;
           break;
         case 8:
@@ -70,5 +71,5 @@ var startServer = async($traceurRuntime.initGeneratorFunction(function $__5(comp
         default:
           return $ctx.end();
       }
-  }, $__5, this);
+  }, $__7, this);
 }));
