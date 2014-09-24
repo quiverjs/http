@@ -8,12 +8,13 @@ Object.defineProperties(exports, {
     }},
   __esModule: {value: true}
 });
-var $__quiver_45_object__,
+var $__http__,
     $__url__,
-    $__querystring__,
-    $__status_46_js__;
-var copy = ($__quiver_45_object__ = require("quiver-object"), $__quiver_45_object__ && $__quiver_45_object__.__esModule && $__quiver_45_object__ || {default: $__quiver_45_object__}).copy;
+    $__quiver_45_object__,
+    $__querystring__;
+var http = ($__http__ = require("http"), $__http__ && $__http__.__esModule && $__http__ || {default: $__http__}).default;
 var urlLib = ($__url__ = require("url"), $__url__ && $__url__.__esModule && $__url__ || {default: $__url__}).default;
+var copy = ($__quiver_45_object__ = require("quiver-object"), $__quiver_45_object__ && $__quiver_45_object__.__esModule && $__quiver_45_object__ || {default: $__quiver_45_object__}).copy;
 var $__5 = urlLib,
     parseUrl = $__5.parse,
     formatUrl = $__5.format;
@@ -21,7 +22,10 @@ var qs = ($__querystring__ = require("querystring"), $__querystring__ && $__quer
 var $__6 = qs,
     parseQueryString = $__6.parse,
     queryStringify = $__6.stringify;
-var getStatusMessage = ($__status_46_js__ = require("./status.js"), $__status_46_js__ && $__status_46_js__.__esModule && $__status_46_js__ || {default: $__status_46_js__}).getStatusMessage;
+var statusCodeTable = http.STATUS_CODES;
+var getStatusMessage = (function(statusCode) {
+  return (statusCodeTable[statusCode] || 'Unknown');
+});
 var assertString = (function(str) {
   if (typeof(str) != 'string')
     throw new Error('argument must be string');
@@ -82,7 +86,7 @@ var RequestHead = function RequestHead() {
   var $__7 = rawHead,
       method = ($__8 = $__7.method) === void 0 ? 'GET' : $__8,
       url = ($__9 = $__7.url) === void 0 ? '/' : $__9;
-  this._method = assertRegex(method, methodRegex).toUpperCase();
+  this._method = assertRegex(method, methodRegex);
   this._url = assertString(url);
   this._args = {};
   this._reset();
@@ -233,6 +237,7 @@ var $ResponseHead = ResponseHead;
   },
   set statusCode(code) {
     this._statusCode = assertNumber(code);
+    this._statusMessage = getStatusMessage(code);
   },
   get statusMessage() {
     return this._statusMessage;

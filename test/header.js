@@ -6,6 +6,10 @@ import {
 } from '../lib/http.js'
 
 import {
+  normalizeTable, normalizeHttpHeader
+} from '../lib/normalize.js'
+
+import {
   streamableToText, textToStreamable
 } from 'quiver-stream-util'
 
@@ -220,5 +224,29 @@ describe('http header test', () => {
       return streamableToText(responseStreamable)
         .should.eventually.equal('Good Bye')
     })
+  })
+
+  it('normalize header test', () => {
+    normalizeTable['content-type']
+      .should.equal('Content-Type')
+
+    normalizeHttpHeader('content-type')
+      .should.equal('Content-Type')
+
+    should.not.exist(normalizeTable['x-custom-header'])
+
+    normalizeHttpHeader('x-custom-header')
+      .should.equal('X-Custom-Header')
+
+    should.not.exist(normalizeTable['x-custom-header'])
+
+    normalizeHttpHeader('x-custom-header', true)
+      .should.equal('X-Custom-Header')
+
+    normalizeTable['x-custom-header']
+      .should.equal('X-Custom-Header')
+
+    normalizeHttpHeader('x-custom-header')
+      .should.equal('X-Custom-Header')
   })
 })
