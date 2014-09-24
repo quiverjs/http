@@ -76,7 +76,7 @@ var HttpHead = function HttpHead() {
     delete this._headers[header.toLowerCase()];
   },
   get headers() {
-    return copy(this._headers);
+    return this._headers;
   }
 }, {});
 var RequestHead = function RequestHead() {

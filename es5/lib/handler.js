@@ -8,18 +8,20 @@ Object.defineProperties(exports, {
     }},
   __esModule: {value: true}
 });
-var $__normalize__,
+var $__quiver_45_promise__,
+    $__normalize__,
     $__header_46_js__,
     $__quiver_45_stream_45_util__;
+var async = ($__quiver_45_promise__ = require("quiver-promise"), $__quiver_45_promise__ && $__quiver_45_promise__.__esModule && $__quiver_45_promise__ || {default: $__quiver_45_promise__}).async;
 var normalizeHttpHeader = ($__normalize__ = require("./normalize"), $__normalize__ && $__normalize__.__esModule && $__normalize__ || {default: $__normalize__}).normalizeHttpHeader;
-var $__1 = ($__header_46_js__ = require("./header.js"), $__header_46_js__ && $__header_46_js__.__esModule && $__header_46_js__ || {default: $__header_46_js__}),
-    RequestHead = $__1.RequestHead,
-    ResponseHead = $__1.ResponseHead;
-var $__2 = ($__quiver_45_stream_45_util__ = require("quiver-stream-util"), $__quiver_45_stream_45_util__ && $__quiver_45_stream_45_util__.__esModule && $__quiver_45_stream_45_util__ || {default: $__quiver_45_stream_45_util__}),
-    pipeStream = $__2.pipeStream,
-    streamToStreamable = $__2.streamToStreamable,
-    nodeToQuiverReadStream = $__2.nodeToQuiverReadStream,
-    nodeToQuiverWriteStream = $__2.nodeToQuiverWriteStream;
+var $__2 = ($__header_46_js__ = require("./header.js"), $__header_46_js__ && $__header_46_js__.__esModule && $__header_46_js__ || {default: $__header_46_js__}),
+    RequestHead = $__2.RequestHead,
+    ResponseHead = $__2.ResponseHead;
+var $__3 = ($__quiver_45_stream_45_util__ = require("quiver-stream-util"), $__quiver_45_stream_45_util__ && $__quiver_45_stream_45_util__.__esModule && $__quiver_45_stream_45_util__ || {default: $__quiver_45_stream_45_util__}),
+    pipeStream = $__3.pipeStream,
+    streamToStreamable = $__3.streamToStreamable,
+    nodeToQuiverReadStream = $__3.nodeToQuiverReadStream,
+    nodeToQuiverWriteStream = $__3.nodeToQuiverWriteStream;
 var streamToHttpHandler = (function(streamHandler) {
   return (function(requestHead, requestStreamable) {
     var args = requestHead.args;
@@ -31,9 +33,9 @@ var streamToHttpHandler = (function(streamHandler) {
       requestStreamable.contentLength = parseInt(contentLength);
     return streamHandler(args, requestStreamable).then((function(resultStreamable) {
       var responseHead = new ResponseHead();
-      var $__3 = resultStreamable,
-          contentType = $__3.contentType,
-          contentLength = $__3.contentLength;
+      var $__4 = resultStreamable,
+          contentType = $__4.contentType,
+          contentLength = $__4.contentLength;
       if (contentType) {
         responseHead.setHeader('content-type', contentType);
       }
@@ -45,35 +47,137 @@ var streamToHttpHandler = (function(streamHandler) {
   });
 });
 var httpToNodeHandler = (function(httpHandler) {
-  return (function(request, response) {
-    var requestHead = new RequestHead({
-      httpVersion: request.httpVersion,
-      headers: request.headers,
-      method: request.method,
-      url: request.url
-    });
-    requestHead.setArgs('clientAddress', request.connection.remoteAddress);
-    var requestStreamable = streamToStreamable(nodeToQuiverReadStream(request));
-    return httpHandler(requestHead, requestStreamable).then((function($__3) {
-      var $__4 = $__3,
-          responseHead = $__4[0],
-          responseStreamable = $__4[1];
-      return responseStreamable.toStream().then((function(responseStream) {
-        var headers = responseHead.headers;
-        for (var key in headers) {
-          var normalizedKey = normalizeHttpHeader(key, true);
-          response.setHeader(normalizedKey, headers[key]);
+  return async($traceurRuntime.initGeneratorFunction(function $__5(request, response) {
+    var requestHead,
+        requestStreamable,
+        $__4,
+        responseHead,
+        responseStreamable,
+        responseStream,
+        headers,
+        $__6,
+        $__7,
+        $__8,
+        $__9,
+        key,
+        normalizedKey,
+        responseWrite,
+        errorCode,
+        $__10,
+        $__11,
+        $__12,
+        $__13,
+        err;
+    return $traceurRuntime.createGeneratorInstance(function($ctx) {
+      while (true)
+        switch ($ctx.state) {
+          case 0:
+            $ctx.pushTry(33, null);
+            $ctx.state = 36;
+            break;
+          case 36:
+            requestHead = new RequestHead({
+              httpVersion: request.httpVersion,
+              headers: request.headers,
+              method: request.method,
+              url: request.url
+            });
+            requestHead.setArgs('clientAddress', request.connection.remoteAddress);
+            requestStreamable = streamToStreamable(nodeToQuiverReadStream(request));
+            $ctx.state = 28;
+            break;
+          case 28:
+            $__10 = httpHandler(requestHead, requestStreamable);
+            $ctx.state = 6;
+            break;
+          case 6:
+            $ctx.state = 2;
+            return $__10;
+          case 2:
+            $__11 = $ctx.sent;
+            $ctx.state = 4;
+            break;
+          case 4:
+            $__4 = $__11;
+            $__12 = $__4[0];
+            responseHead = $__12;
+            $__13 = $__4[1];
+            responseStreamable = $__13;
+            $ctx.state = 8;
+            break;
+          case 8:
+            $ctx.state = 10;
+            return responseStreamable.toStream();
+          case 10:
+            responseStream = $ctx.sent;
+            $ctx.state = 12;
+            break;
+          case 12:
+            headers = responseHead.headers;
+            $ctx.state = 30;
+            break;
+          case 30:
+            $__6 = [];
+            $__7 = headers;
+            for ($__8 in $__7)
+              $__6.push($__8);
+            $ctx.state = 24;
+            break;
+          case 24:
+            $__9 = 0;
+            $ctx.state = 22;
+            break;
+          case 22:
+            $ctx.state = ($__9 < $__6.length) ? 16 : 20;
+            break;
+          case 19:
+            $__9++;
+            $ctx.state = 22;
+            break;
+          case 16:
+            key = $__6[$__9];
+            $ctx.state = 17;
+            break;
+          case 17:
+            $ctx.state = (!(key in $__7)) ? 19 : 14;
+            break;
+          case 14:
+            normalizedKey = normalizeHttpHeader(key, true);
+            response.setHeader(normalizedKey, headers[key]);
+            $ctx.state = 19;
+            break;
+          case 20:
+            response.writeHead(responseHead.statusCode, responseHead.statusMessage);
+            if (headers['transfer-encoding'] == 'chunked') {
+              response.chunkedEncoding = false;
+            }
+            responseWrite = nodeToQuiverWriteStream(response);
+            $ctx.state = 32;
+            break;
+          case 32:
+            $ctx.returnValue = pipeStream(responseStream, responseWrite);
+            $ctx.state = -2;
+            break;
+          case 26:
+            $ctx.popTry();
+            $ctx.state = -2;
+            break;
+          case 33:
+            $ctx.popTry();
+            err = $ctx.storedException;
+            $ctx.state = 39;
+            break;
+          case 39:
+            if (!response.headersSents) {
+              errorCode = err.errorCode || 500;
+              response.writeHead(errorCode, {'Content-Length': 0});
+            }
+            response.end();
+            $ctx.state = -2;
+            break;
+          default:
+            return $ctx.end();
         }
-        response.writeHead(responseHead.statusCode, responseHead.statusMessage);
-        var responseWrite = nodeToQuiverWriteStream(response);
-        return pipeStream(responseStream, responseWrite);
-      }));
-    })).catch((function(err) {
-      if (!response.headersSents) {
-        var errorCode = err.errorCode || 500;
-        response.writeHead(errorCode, {'Content-Length': 0});
-      }
-      response.end();
-    }));
-  });
+    }, $__5, this);
+  }));
 });

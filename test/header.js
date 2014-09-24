@@ -133,7 +133,7 @@ describe('http header test', () => {
 
     headers['x-foo'] = 'BAZ'
 
-    requestHead.getHeader('X-Foo').should.equal('Bar')
+    requestHead.getHeader('X-Foo').should.equal('BAZ')
   })
 
   it('request head args test', () => {

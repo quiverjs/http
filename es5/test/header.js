@@ -93,7 +93,7 @@ describe('http header test', (function() {
     var headers = requestHead.headers;
     headers['x-foo'].should.equal('Bar');
     headers['x-foo'] = 'BAZ';
-    requestHead.getHeader('X-Foo').should.equal('Bar');
+    requestHead.getHeader('X-Foo').should.equal('BAZ');
   }));
   it('request head args test', (function() {
     var requestHead = new RequestHead({
