@@ -53,7 +53,6 @@ var httpToNodeHandler = (function(httpHandler) {
         $__4,
         responseHead,
         responseStreamable,
-        responseStream,
         headers,
         $__6,
         $__7,
@@ -61,6 +60,8 @@ var httpToNodeHandler = (function(httpHandler) {
         $__9,
         key,
         normalizedKey,
+        nodeRead,
+        responseStream,
         responseWrite,
         errorCode,
         $__10,
@@ -72,10 +73,10 @@ var httpToNodeHandler = (function(httpHandler) {
       while (true)
         switch ($ctx.state) {
           case 0:
-            $ctx.pushTry(33, null);
-            $ctx.state = 36;
+            $ctx.pushTry(40, null);
+            $ctx.state = 43;
             break;
-          case 36:
+          case 43:
             requestHead = new RequestHead({
               httpVersion: request.httpVersion,
               headers: request.headers,
@@ -84,9 +85,9 @@ var httpToNodeHandler = (function(httpHandler) {
             });
             requestHead.setArgs('clientAddress', request.connection.remoteAddress);
             requestStreamable = streamToStreamable(nodeToQuiverReadStream(request));
-            $ctx.state = 28;
+            $ctx.state = 35;
             break;
-          case 28:
+          case 35:
             $__10 = httpHandler(requestHead, requestStreamable);
             $ctx.state = 6;
             break;
@@ -106,68 +107,82 @@ var httpToNodeHandler = (function(httpHandler) {
             $ctx.state = 8;
             break;
           case 8:
-            $ctx.state = 10;
-            return responseStreamable.toStream();
-          case 10:
-            responseStream = $ctx.sent;
-            $ctx.state = 12;
-            break;
-          case 12:
             headers = responseHead.headers;
-            $ctx.state = 30;
+            $ctx.state = 37;
             break;
-          case 30:
+          case 37:
             $__6 = [];
             $__7 = headers;
             for ($__8 in $__7)
               $__6.push($__8);
-            $ctx.state = 24;
-            break;
-          case 24:
-            $__9 = 0;
-            $ctx.state = 22;
-            break;
-          case 22:
-            $ctx.state = ($__9 < $__6.length) ? 16 : 20;
-            break;
-          case 19:
-            $__9++;
-            $ctx.state = 22;
-            break;
-          case 16:
-            key = $__6[$__9];
-            $ctx.state = 17;
-            break;
-          case 17:
-            $ctx.state = (!(key in $__7)) ? 19 : 14;
-            break;
-          case 14:
-            normalizedKey = normalizeHttpHeader(key, true);
-            response.setHeader(normalizedKey, headers[key]);
-            $ctx.state = 19;
+            $ctx.state = 20;
             break;
           case 20:
+            $__9 = 0;
+            $ctx.state = 18;
+            break;
+          case 18:
+            $ctx.state = ($__9 < $__6.length) ? 12 : 16;
+            break;
+          case 15:
+            $__9++;
+            $ctx.state = 18;
+            break;
+          case 12:
+            key = $__6[$__9];
+            $ctx.state = 13;
+            break;
+          case 13:
+            $ctx.state = (!(key in $__7)) ? 15 : 10;
+            break;
+          case 10:
+            normalizedKey = normalizeHttpHeader(key, true);
+            response.setHeader(normalizedKey, headers[key]);
+            $ctx.state = 15;
+            break;
+          case 16:
             response.writeHead(responseHead.statusCode, responseHead.statusMessage);
             if (headers['transfer-encoding'] == 'chunked') {
               response.chunkedEncoding = false;
             }
-            responseWrite = nodeToQuiverWriteStream(response);
-            $ctx.state = 32;
+            $ctx.state = 39;
             break;
-          case 32:
-            $ctx.returnValue = pipeStream(responseStream, responseWrite);
-            $ctx.state = -2;
+          case 39:
+            $ctx.state = (responseStreamable.toNodeStream) ? 21 : 27;
+            break;
+          case 21:
+            $ctx.state = 22;
+            return responseStreamable.toNodeStream();
+          case 22:
+            nodeRead = $ctx.sent;
+            $ctx.state = 24;
+            break;
+          case 24:
+            nodeRead.pipe(response);
+            $ctx.state = 26;
+            break;
+          case 27:
+            $ctx.state = 28;
+            return responseStreamable.toStream();
+          case 28:
+            responseStream = $ctx.sent;
+            $ctx.state = 30;
+            break;
+          case 30:
+            responseWrite = nodeToQuiverWriteStream(response);
+            pipeStream(responseStream, responseWrite);
+            $ctx.state = 26;
             break;
           case 26:
             $ctx.popTry();
             $ctx.state = -2;
             break;
-          case 33:
+          case 40:
             $ctx.popTry();
             err = $ctx.storedException;
-            $ctx.state = 39;
+            $ctx.state = 46;
             break;
-          case 39:
+          case 46:
             if (!response.headersSents) {
               errorCode = err.errorCode || 500;
               response.writeHead(errorCode, {'Content-Length': 0});
