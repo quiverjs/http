@@ -10,11 +10,11 @@ Object.defineProperties(exports, {
 });
 var $__quiver_45_promise__,
     $__normalize__,
-    $__header_46_js__,
+    $__header__,
     $__quiver_45_stream_45_util__;
 var async = ($__quiver_45_promise__ = require("quiver-promise"), $__quiver_45_promise__ && $__quiver_45_promise__.__esModule && $__quiver_45_promise__ || {default: $__quiver_45_promise__}).async;
 var normalizeHttpHeader = ($__normalize__ = require("./normalize"), $__normalize__ && $__normalize__.__esModule && $__normalize__ || {default: $__normalize__}).normalizeHttpHeader;
-var $__2 = ($__header_46_js__ = require("./header.js"), $__header_46_js__ && $__header_46_js__.__esModule && $__header_46_js__ || {default: $__header_46_js__}),
+var $__2 = ($__header__ = require("./header"), $__header__ && $__header__.__esModule && $__header__ || {default: $__header__}),
     RequestHead = $__2.RequestHead,
     ResponseHead = $__2.ResponseHead;
 var $__3 = ($__quiver_45_stream_45_util__ = require("quiver-stream-util"), $__quiver_45_stream_45_util__ && $__quiver_45_stream_45_util__.__esModule && $__quiver_45_stream_45_util__ || {default: $__quiver_45_stream_45_util__}),

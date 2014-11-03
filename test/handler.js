@@ -1,13 +1,12 @@
 import 'traceur'
+import http from 'http'
 
 import { 
   RequestHead, ResponseHead,
   httpToNodeHandler,
   subrequest, getRequest,
   startServer
-} from '../lib/http.js'
-
-import http from 'http'
+} from '../lib/http'
 
 var { createServer } = http
 
@@ -19,8 +18,8 @@ import {
   streamToText, textToStream
 } from 'quiver-stream-util'
 
-var chai = require('chai')
-var chaiAsPromised = require('chai-as-promised')
+import chai from 'chai'
+import chaiAsPromised from 'chai-as-promised'
 
 chai.use(chaiAsPromised)
 var should = chai.should()

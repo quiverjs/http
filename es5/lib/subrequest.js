@@ -14,26 +14,27 @@ Object.defineProperties(exports, {
     }},
   __esModule: {value: true}
 });
-var $__header_46_js__,
+var $__http__,
+    $__header__,
     $__quiver_45_stream_45_util__;
-var $__0 = ($__header_46_js__ = require("./header.js"), $__header_46_js__ && $__header_46_js__.__esModule && $__header_46_js__ || {default: $__header_46_js__}),
-    RequestHead = $__0.RequestHead,
-    ResponseHead = $__0.ResponseHead;
-var $__1 = ($__quiver_45_stream_45_util__ = require("quiver-stream-util"), $__quiver_45_stream_45_util__ && $__quiver_45_stream_45_util__.__esModule && $__quiver_45_stream_45_util__ || {default: $__quiver_45_stream_45_util__}),
-    pipeStream = $__1.pipeStream,
-    streamToStreamable = $__1.streamToStreamable,
-    nodeToQuiverReadStream = $__1.nodeToQuiverReadStream,
-    nodeToQuiverWriteStream = $__1.nodeToQuiverWriteStream;
-var http = require('http');
+var http = ($__http__ = require("http"), $__http__ && $__http__.__esModule && $__http__ || {default: $__http__}).default;
+var $__1 = ($__header__ = require("./header"), $__header__ && $__header__.__esModule && $__header__ || {default: $__header__}),
+    RequestHead = $__1.RequestHead,
+    ResponseHead = $__1.ResponseHead;
+var $__2 = ($__quiver_45_stream_45_util__ = require("quiver-stream-util"), $__quiver_45_stream_45_util__ && $__quiver_45_stream_45_util__.__esModule && $__quiver_45_stream_45_util__ || {default: $__quiver_45_stream_45_util__}),
+    pipeStream = $__2.pipeStream,
+    streamToStreamable = $__2.streamToStreamable,
+    nodeToQuiverReadStream = $__2.nodeToQuiverReadStream,
+    nodeToQuiverWriteStream = $__2.nodeToQuiverWriteStream;
 var requestHeadToOptions = (function(requestHead) {
-  var $__2 = requestHead,
-      auth = $__2.auth,
-      hostname = $__2.hostname,
-      port = $__2.port,
-      method = $__2.method,
-      path = $__2.path,
-      queryString = $__2.queryString,
-      headers = $__2.headers;
+  var $__3 = requestHead,
+      auth = $__3.auth,
+      hostname = $__3.hostname,
+      port = $__3.port,
+      method = $__3.method,
+      path = $__3.path,
+      queryString = $__3.queryString,
+      headers = $__3.headers;
   return {
     auth: auth,
     hostname: hostname,

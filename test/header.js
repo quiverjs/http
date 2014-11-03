@@ -3,18 +3,18 @@ import 'traceur'
 import { 
   RequestHead, ResponseHead,
   streamToHttpHandler
-} from '../lib/http.js'
+} from '../lib/http'
 
 import {
   normalizeTable, normalizeHttpHeader
-} from '../lib/normalize.js'
+} from '../lib/normalize'
 
 import {
   streamableToText, textToStreamable
 } from 'quiver-stream-util'
 
-var chai = require('chai')
-var chaiAsPromised = require('chai-as-promised')
+import chai from 'chai'
+import chaiAsPromised from 'chai-as-promised'
 
 chai.use(chaiAsPromised)
 var should = chai.should()

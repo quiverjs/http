@@ -29,21 +29,21 @@ Object.defineProperties(exports, {
     }},
   __esModule: {value: true}
 });
-var $__header_46_js__,
-    $__handler_46_js__,
-    $__normalize_46_js__,
-    $__subrequest_46_js__,
-    $__server_46_js__;
-var $__0 = ($__header_46_js__ = require("./header.js"), $__header_46_js__ && $__header_46_js__.__esModule && $__header_46_js__ || {default: $__header_46_js__}),
+var $__header__,
+    $__handler__,
+    $__normalize__,
+    $__subrequest__,
+    $__server__;
+var $__0 = ($__header__ = require("./header"), $__header__ && $__header__.__esModule && $__header__ || {default: $__header__}),
     HttpHead = $__0.HttpHead,
     RequestHead = $__0.RequestHead,
     ResponseHead = $__0.ResponseHead;
-var $__1 = ($__handler_46_js__ = require("./handler.js"), $__handler_46_js__ && $__handler_46_js__.__esModule && $__handler_46_js__ || {default: $__handler_46_js__}),
+var $__1 = ($__handler__ = require("./handler"), $__handler__ && $__handler__.__esModule && $__handler__ || {default: $__handler__}),
     streamToHttpHandler = $__1.streamToHttpHandler,
     httpToNodeHandler = $__1.httpToNodeHandler;
-var normalizeHttpHeader = ($__normalize_46_js__ = require("./normalize.js"), $__normalize_46_js__ && $__normalize_46_js__.__esModule && $__normalize_46_js__ || {default: $__normalize_46_js__}).normalizeHttpHeader;
-var $__3 = ($__subrequest_46_js__ = require("./subrequest.js"), $__subrequest_46_js__ && $__subrequest_46_js__.__esModule && $__subrequest_46_js__ || {default: $__subrequest_46_js__}),
+var normalizeHttpHeader = ($__normalize__ = require("./normalize"), $__normalize__ && $__normalize__.__esModule && $__normalize__ || {default: $__normalize__}).normalizeHttpHeader;
+var $__3 = ($__subrequest__ = require("./subrequest"), $__subrequest__ && $__subrequest__.__esModule && $__subrequest__ || {default: $__subrequest__}),
     subrequest = $__3.subrequest,
     getRequest = $__3.getRequest;
-var startServer = ($__server_46_js__ = require("./server.js"), $__server_46_js__ && $__server_46_js__.__esModule && $__server_46_js__ || {default: $__server_46_js__}).startServer;
+var startServer = ($__server__ = require("./server"), $__server__ && $__server__.__esModule && $__server__ || {default: $__server__}).startServer;
 ;
