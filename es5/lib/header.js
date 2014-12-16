@@ -90,7 +90,7 @@ var RequestHead = function RequestHead() {
   this._url = assertString(url);
   this._args = {};
   this._reset();
-  $traceurRuntime.superCall(this, $RequestHead.prototype, "constructor", [rawHead]);
+  $traceurRuntime.superConstructor($RequestHead).call(this, rawHead);
   this._args.path = this.path, this._args.requestHead = this;
 };
 var $RequestHead = RequestHead;
@@ -228,7 +228,7 @@ var ResponseHead = function ResponseHead() {
       statusMessage = ($__9 = $__7.statusMessage) === void 0 ? getStatusMessage(statusCode) : $__9;
   this._statusCode = assertNumber(statusCode);
   this._statusMessage = assertRegex(statusMessage, valueRegex);
-  $traceurRuntime.superCall(this, $ResponseHead.prototype, "constructor", [rawHead]);
+  $traceurRuntime.superConstructor($ResponseHead).call(this, rawHead);
 };
 var $ResponseHead = ResponseHead;
 ($traceurRuntime.createClass)(ResponseHead, {
