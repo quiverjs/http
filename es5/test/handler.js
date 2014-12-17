@@ -320,9 +320,14 @@ describe('node handler test', (function() {
                   }
               }, $__26, this);
             }));
-            component = {handleableBuilder: (function(config) {
-                return ({streamHandler: handler});
-              })};
+            component = {
+              isHandlerComponent: true,
+              toHandleableBuilder: (function() {
+                return (function(config) {
+                  return ({streamHandler: handler});
+                });
+              })
+            };
             port = testPort++;
             config = {serverListen: port};
             $ctx.state = 18;

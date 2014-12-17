@@ -6,7 +6,7 @@
   },
   "name": "quiver-http",
   "desription": "Classes to represent HTTP request/response in Quiver",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "homepage": "https://github.com/quiverjs/quiver-http",
   "repository": {
     "url": "git@github.com:quiverjs/quiver-http.git"

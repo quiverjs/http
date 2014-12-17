@@ -129,9 +129,11 @@ describe('node handler test', () => {
     })
 
     var component = {
-      handleableBuilder: config => ({
-        streamHandler: handler
-      })
+      isHandlerComponent: true,
+      toHandleableBuilder: () =>
+        config => ({
+          streamHandler: handler
+        })
     }
 
     var port = testPort++

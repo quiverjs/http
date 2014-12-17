@@ -31,10 +31,11 @@ var startServer = async($traceurRuntime.initGeneratorFunction(function $__7(comp
     while (true)
       switch ($ctx.state) {
         case 0:
-          builder = component.handleableBuilder;
+          if (!component.isHandlerComponent) {
+            throw new Error('First argument must be handler component');
+          }
+          builder = component.toHandleableBuilder();
           $__4 = config, serverListen = ($__5 = $__4.serverListen) === void 0 ? 8080 : $__5;
-          if (!builder)
-            throw new Error('Component do not have handleableBuilder');
           if (!config)
             throw new Error('Config is not defined');
           $ctx.state = 12;
