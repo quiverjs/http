@@ -8,7 +8,7 @@ import {
   startServer
 } from '../lib/http'
 
-var { createServer } = http
+let { createServer } = http
 
 import { async, timeout, reject } from 'quiver-promise'
 import { error } from 'quiver-error'
@@ -22,14 +22,14 @@ import chai from 'chai'
 import chaiAsPromised from 'chai-as-promised'
 
 chai.use(chaiAsPromised)
-var should = chai.should()
-var expect = chai.expect
+let should = chai.should()
+let expect = chai.expect
 
-var testPort = 8100
+let testPort = 8100
 
 describe('node handler test', () => {
   it('get request test', async(function*() {
-    var handler = async(function*(requestHead, streamable) {
+    let handler = async(function*(requestHead, streamable) {
       requestHead.method.should.equal('GET')
       requestHead.path.should.equal('/get-path')
       requestHead.query.foo.should.equal('bar')
@@ -40,11 +40,11 @@ describe('node handler test', () => {
       return [new ResponseHead(), textToStreamable('Hello World')]
     })
 
-    var port = testPort++
-    var server = createServer(httpToNodeHandler(handler))
+    let port = testPort++
+    let server = createServer(httpToNodeHandler(handler))
       .listen(port)
 
-    var [responseHead, responseStream] = yield getRequest(
+    let [responseHead, responseStream] = yield getRequest(
       'http://localhost:' + port + '/get-path?foo=bar')
 
     responseHead.statusCode.should.equal(200)
@@ -57,7 +57,7 @@ describe('node handler test', () => {
   }))
 
   it('post request test', async(function*() {
-    var handler = async(function*(requestHead, streamable) {
+    let handler = async(function*(requestHead, streamable) {
       requestHead.method.should.equal('POST')
       requestHead.path.should.equal('/post-path')
       requestHead.query.foo.should.equal('bar')
@@ -69,11 +69,11 @@ describe('node handler test', () => {
       return [new ResponseHead(), textToStreamable('Good Bye')]
     })
 
-    var port = testPort++
-    var server = createServer(httpToNodeHandler(handler))
+    let port = testPort++
+    let server = createServer(httpToNodeHandler(handler))
       .listen(port)
 
-    var requestHead = new RequestHead({
+    let requestHead = new RequestHead({
       url: 'http://localhost:' + port + '/post-path?foo=bar',
       method: 'post',
       headers: {
@@ -81,7 +81,7 @@ describe('node handler test', () => {
       }
     })
 
-    var [responseHead, responseStream] = yield subrequest(
+    let [responseHead, responseStream] = yield subrequest(
       requestHead, textToStream('Hello'))
 
     responseHead.statusCode.should.equal(200)
@@ -94,14 +94,14 @@ describe('node handler test', () => {
   }))
 
   it('error test', async(function*() {
-    var handler = (requestHead, streamable) =>
+    let handler = (requestHead, streamable) =>
       reject(error(404, 'Not Found'))
 
-    var port = testPort++
-    var server = createServer(httpToNodeHandler(handler))
+    let port = testPort++
+    let server = createServer(httpToNodeHandler(handler))
       .listen(port)
 
-    var [responseHead, responseStream] = yield getRequest(
+    let [responseHead, responseStream] = yield getRequest(
       'http://localhost:' + port + '/')
 
     responseHead.statusCode.should.equal(404)
@@ -114,8 +114,8 @@ describe('node handler test', () => {
   }))
 
   it('server test', async(function*() {
-    var handler = async(function*(args, streamable) {
-      var { requestHead } = args
+    let handler = async(function*(args, streamable) {
+      let { requestHead } = args
       
       args.path.should.equal('/get-path')
 
@@ -128,7 +128,7 @@ describe('node handler test', () => {
       return textToStreamable('Hello World')
     })
 
-    var component = {
+    let component = {
       isHandlerComponent: true,
       toHandleableBuilder: () =>
         config => ({
@@ -136,13 +136,13 @@ describe('node handler test', () => {
         })
     }
 
-    var port = testPort++
-    var config = {
+    let port = testPort++
+    let config = {
       serverListen: port
     }
-    var server = yield startServer(component, config)
+    let server = yield startServer(component, config)
 
-    var [responseHead, responseStream] = yield getRequest(
+    let [responseHead, responseStream] = yield getRequest(
       'http://localhost:' + port + '/get-path?foo=bar')
 
     responseHead.statusCode.should.equal(200)

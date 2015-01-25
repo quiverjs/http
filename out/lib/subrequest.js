@@ -26,8 +26,8 @@ var $__2 = ($__quiver_45_stream_45_util__ = require("quiver-stream-util"), $__qu
     streamToStreamable = $__2.streamToStreamable,
     nodeToQuiverReadStream = $__2.nodeToQuiverReadStream,
     nodeToQuiverWriteStream = $__2.nodeToQuiverWriteStream;
-var requestHeadToOptions = (function(requestHead) {
-  var $__3 = requestHead,
+let requestHeadToOptions = (function(requestHead) {
+  let $__3 = requestHead,
       auth = $__3.auth,
       hostname = $__3.hostname,
       port = $__3.port,
@@ -44,20 +44,20 @@ var requestHeadToOptions = (function(requestHead) {
     headers: headers
   };
 });
-var nodeToQuiverResponse = (function(response) {
-  var responseHead = new ResponseHead(response);
-  var responseStream = nodeToQuiverReadStream(response);
+let nodeToQuiverResponse = (function(response) {
+  let responseHead = new ResponseHead(response);
+  let responseStream = nodeToQuiverReadStream(response);
   return [responseHead, responseStream];
 });
-var subrequest = (function(requestHead, requestStream) {
+let subrequest = (function(requestHead, requestStream) {
   return new Promise((function(resolve, reject) {
-    var request = http.request(requestHeadToOptions(requestHead), (function(response) {
+    let request = http.request(requestHeadToOptions(requestHead), (function(response) {
       return resolve(nodeToQuiverResponse(response));
     })).on('error', reject);
     pipeStream(requestStream, nodeToQuiverWriteStream(request));
   }));
 });
-var getRequest = (function(url, requestStream) {
+let getRequest = (function(url, requestStream) {
   return new Promise((function(resolve, reject) {
     http.get(url, (function(response) {
       return resolve(nodeToQuiverResponse(response));

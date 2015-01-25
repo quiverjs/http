@@ -17,12 +17,12 @@ import chai from 'chai'
 import chaiAsPromised from 'chai-as-promised'
 
 chai.use(chaiAsPromised)
-var should = chai.should()
-var expect = chai.expect
+let should = chai.should()
+let expect = chai.expect
 
 describe('http header test', () => {
   it('request head test 1', () => {
-    var requestHead = new RequestHead()
+    let requestHead = new RequestHead()
 
     requestHead.httpVersion.should.equal('1.1')
     requestHead.method.should.equal('GET')
@@ -32,7 +32,7 @@ describe('http header test', () => {
   })
 
   it('request head test 2', () => {
-    var requestHead = new RequestHead({
+    let requestHead = new RequestHead({
       url: '/api/path?foo=bar'
     })
 
@@ -42,7 +42,7 @@ describe('http header test', () => {
   })
 
   it('request head test 3', () => {
-    var requestHead = new RequestHead({
+    let requestHead = new RequestHead({
       url: '/api/path?foo=bar'
     })
 
@@ -55,7 +55,7 @@ describe('http header test', () => {
   })
 
   it('request head test 3', () => {
-    var requestHead = new RequestHead({
+    let requestHead = new RequestHead({
       url: '/api/path?foo=bar'
     })
 
@@ -69,7 +69,7 @@ describe('http header test', () => {
   })
 
   it('request head test 4', () => {
-    var requestHead = new RequestHead({
+    let requestHead = new RequestHead({
       url: '/api/path?foo=bar'
     })
 
@@ -86,7 +86,7 @@ describe('http header test', () => {
   })
 
   it('request head test 5', () => {
-    var requestHead = new RequestHead({
+    let requestHead = new RequestHead({
       url: '/api/path?foo=bar'
     })
 
@@ -105,7 +105,7 @@ describe('http header test', () => {
   })
 
   it('request head test 6', () => {
-    var requestHead = new RequestHead({
+    let requestHead = new RequestHead({
       url: 'http://localhost:8080/api/path?foo=bar'
     })
 
@@ -118,7 +118,7 @@ describe('http header test', () => {
   })
 
   it('request head copy fields test', () => {
-    var requestHead = new RequestHead({
+    let requestHead = new RequestHead({
       url: '/api/path?foo=bar',
       headers: {
         'X-Foo': 'Bar'
@@ -128,7 +128,7 @@ describe('http header test', () => {
     requestHead.getHeader('X-Foo').should.equal('Bar')
     requestHead.getHeader('x-FOO').should.equal('Bar')
 
-    var { headers } = requestHead
+    let { headers } = requestHead
     headers['x-foo'].should.equal('Bar')
 
     headers['x-foo'] = 'BAZ'
@@ -137,7 +137,7 @@ describe('http header test', () => {
   })
 
   it('request head args test', () => {
-    var requestHead = new RequestHead({
+    let requestHead = new RequestHead({
       url: '/api/path?foo=bar',
       headers: {
         'X-Foo': 'Bar'
@@ -146,7 +146,7 @@ describe('http header test', () => {
 
     requestHead.setArgs('foo', 'baz')
 
-    var { args } = requestHead
+    let { args } = requestHead
 
     args.path.should.equal('/api/path')
     args.foo.should.equal('baz')
@@ -155,7 +155,7 @@ describe('http header test', () => {
   })
 
   it('request head error test', () => {
-    var requestHead = new RequestHead({
+    let requestHead = new RequestHead({
       url: '/api/path?foo=bar'
     })
 
@@ -165,7 +165,7 @@ describe('http header test', () => {
   })
 
   it('response head test', () => {
-    var responseHead = new ResponseHead()
+    let responseHead = new ResponseHead()
 
     responseHead.statusCode.should.equal(200)
     responseHead.statusMessage.should.equal('OK')
@@ -186,7 +186,7 @@ describe('http header test', () => {
   })
 
   it('handler convert test', () => {
-    var streamHandler = (args, streamable) => {
+    let streamHandler = (args, streamable) => {
       args.path.should.equal('/api/hello')
       args.requestHead.method.should.equal('POST')
 
@@ -202,9 +202,9 @@ describe('http header test', () => {
         })
     }
 
-    var httpHandler = streamToHttpHandler(streamHandler)
+    let httpHandler = streamToHttpHandler(streamHandler)
 
-    var requestHead = new RequestHead({
+    let requestHead = new RequestHead({
       method: 'POST',
       url: '/api/hello?foo=bar'
     })

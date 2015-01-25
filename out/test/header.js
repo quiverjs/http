@@ -1,11 +1,11 @@
 "use strict";
-var $__traceur_64_0_46_0_46_7__,
+var $__traceur_64_0_46_0_46_8__,
     $___46__46__47_lib_47_http__,
     $___46__46__47_lib_47_normalize__,
     $__quiver_45_stream_45_util__,
     $__chai__,
     $__chai_45_as_45_promised__;
-($__traceur_64_0_46_0_46_7__ = require("traceur"), $__traceur_64_0_46_0_46_7__ && $__traceur_64_0_46_0_46_7__.__esModule && $__traceur_64_0_46_0_46_7__ || {default: $__traceur_64_0_46_0_46_7__});
+($__traceur_64_0_46_0_46_8__ = require("traceur"), $__traceur_64_0_46_0_46_8__ && $__traceur_64_0_46_0_46_8__.__esModule && $__traceur_64_0_46_0_46_8__ || {default: $__traceur_64_0_46_0_46_8__});
 var $__0 = ($___46__46__47_lib_47_http__ = require("../lib/http"), $___46__46__47_lib_47_http__ && $___46__46__47_lib_47_http__.__esModule && $___46__46__47_lib_47_http__ || {default: $___46__46__47_lib_47_http__}),
     RequestHead = $__0.RequestHead,
     ResponseHead = $__0.ResponseHead,
@@ -19,11 +19,11 @@ var $__2 = ($__quiver_45_stream_45_util__ = require("quiver-stream-util"), $__qu
 var chai = ($__chai__ = require("chai"), $__chai__ && $__chai__.__esModule && $__chai__ || {default: $__chai__}).default;
 var chaiAsPromised = ($__chai_45_as_45_promised__ = require("chai-as-promised"), $__chai_45_as_45_promised__ && $__chai_45_as_45_promised__.__esModule && $__chai_45_as_45_promised__ || {default: $__chai_45_as_45_promised__}).default;
 chai.use(chaiAsPromised);
-var should = chai.should();
-var expect = chai.expect;
+let should = chai.should();
+let expect = chai.expect;
 describe('http header test', (function() {
   it('request head test 1', (function() {
-    var requestHead = new RequestHead();
+    let requestHead = new RequestHead();
     requestHead.httpVersion.should.equal('1.1');
     requestHead.method.should.equal('GET');
     requestHead.url.should.equal('/');
@@ -31,13 +31,13 @@ describe('http header test', (function() {
     requestHead.queryString.should.equal('');
   }));
   it('request head test 2', (function() {
-    var requestHead = new RequestHead({url: '/api/path?foo=bar'});
+    let requestHead = new RequestHead({url: '/api/path?foo=bar'});
     requestHead.path.should.equal('/api/path');
     requestHead.queryString.should.equal('foo=bar');
     requestHead.query.foo.should.equal('bar');
   }));
   it('request head test 3', (function() {
-    var requestHead = new RequestHead({url: '/api/path?foo=bar'});
+    let requestHead = new RequestHead({url: '/api/path?foo=bar'});
     requestHead.setQuery('foo', 'baz');
     requestHead.url.should.equal('/api/path?foo=baz');
     requestHead.path.should.equal('/api/path');
@@ -45,7 +45,7 @@ describe('http header test', (function() {
     requestHead.query.foo.should.equal('baz');
   }));
   it('request head test 3', (function() {
-    var requestHead = new RequestHead({url: '/api/path?foo=bar'});
+    let requestHead = new RequestHead({url: '/api/path?foo=bar'});
     requestHead.path = '/new-path';
     requestHead.url.should.equal('/new-path?foo=bar');
     requestHead.path.should.equal('/new-path');
@@ -53,7 +53,7 @@ describe('http header test', (function() {
     requestHead.query.foo.should.equal('bar');
   }));
   it('request head test 4', (function() {
-    var requestHead = new RequestHead({url: '/api/path?foo=bar'});
+    let requestHead = new RequestHead({url: '/api/path?foo=bar'});
     requestHead.path.should.equal('/api/path');
     requestHead.queryString.should.equal('foo=bar');
     requestHead.query.foo.should.equal('bar');
@@ -64,7 +64,7 @@ describe('http header test', (function() {
     requestHead.query.foo.should.equal('baz');
   }));
   it('request head test 5', (function() {
-    var requestHead = new RequestHead({url: '/api/path?foo=bar'});
+    let requestHead = new RequestHead({url: '/api/path?foo=bar'});
     requestHead.path.should.equal('/api/path');
     requestHead.queryString.should.equal('foo=bar');
     requestHead.query.foo.should.equal('bar');
@@ -77,7 +77,7 @@ describe('http header test', (function() {
     requestHead.query.foo.should.equal('baz');
   }));
   it('request head test 6', (function() {
-    var requestHead = new RequestHead({url: 'http://localhost:8080/api/path?foo=bar'});
+    let requestHead = new RequestHead({url: 'http://localhost:8080/api/path?foo=bar'});
     requestHead.protocol.should.equal('http:');
     requestHead.hostname.should.equal('localhost');
     requestHead.port.should.equal('8080');
@@ -86,36 +86,36 @@ describe('http header test', (function() {
     requestHead.query.foo.should.equal('bar');
   }));
   it('request head copy fields test', (function() {
-    var requestHead = new RequestHead({
+    let requestHead = new RequestHead({
       url: '/api/path?foo=bar',
       headers: {'X-Foo': 'Bar'}
     });
     requestHead.getHeader('X-Foo').should.equal('Bar');
     requestHead.getHeader('x-FOO').should.equal('Bar');
-    var headers = requestHead.headers;
+    let headers = requestHead.headers;
     headers['x-foo'].should.equal('Bar');
     headers['x-foo'] = 'BAZ';
     requestHead.getHeader('X-Foo').should.equal('BAZ');
   }));
   it('request head args test', (function() {
-    var requestHead = new RequestHead({
+    let requestHead = new RequestHead({
       url: '/api/path?foo=bar',
       headers: {'X-Foo': 'Bar'}
     });
     requestHead.setArgs('foo', 'baz');
-    var args = requestHead.args;
+    let args = requestHead.args;
     args.path.should.equal('/api/path');
     args.foo.should.equal('baz');
     args.requestHead.query.foo.should.equal('bar');
   }));
   it('request head error test', (function() {
-    var requestHead = new RequestHead({url: '/api/path?foo=bar'});
+    let requestHead = new RequestHead({url: '/api/path?foo=bar'});
     expect((function() {
       return requestHead.setHeader('Foo:', '');
     })).to.throw();
   }));
   it('response head test', (function() {
-    var responseHead = new ResponseHead();
+    let responseHead = new ResponseHead();
     responseHead.statusCode.should.equal(200);
     responseHead.statusMessage.should.equal('OK');
     responseHead.statusCode = 404;
@@ -130,7 +130,7 @@ describe('http header test', (function() {
     })).to.throw();
   }));
   it('handler convert test', (function() {
-    var streamHandler = (function(args, streamable) {
+    let streamHandler = (function(args, streamable) {
       args.path.should.equal('/api/hello');
       args.requestHead.method.should.equal('POST');
       streamable.contentType.should.equal('text/html');
@@ -140,15 +140,17 @@ describe('http header test', (function() {
         return textToStreamable('Good Bye');
       }));
     });
-    var httpHandler = streamToHttpHandler(streamHandler);
-    var requestHead = new RequestHead({
+    let httpHandler = streamToHttpHandler(streamHandler);
+    let requestHead = new RequestHead({
       method: 'POST',
       url: '/api/hello?foo=bar'
     }).setHeader('content-type', 'text/html');
     return httpHandler(requestHead, textToStreamable('Hello')).then((function($__5) {
+      var $__7,
+          $__8;
       var $__6 = $__5,
-          responseHead = $__6[0],
-          responseStreamable = $__6[1];
+          responseHead = ($__7 = $__6[$traceurRuntime.toProperty(Symbol.iterator)](), ($__8 = $__7.next()).done ? void 0 : $__8.value),
+          responseStreamable = ($__8 = $__7.next()).done ? void 0 : $__8.value;
       responseHead.statusCode.should.equal(200);
       responseHead.statusMessage.should.equal('OK');
       responseHead.getHeader('content-type').should.equal('text/plain');
