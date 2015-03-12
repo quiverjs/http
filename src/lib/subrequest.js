@@ -11,8 +11,8 @@ import {
   nodeToQuiverWriteStream
 } from 'quiver-stream-util'
 
-export let requestHeadToOptions = requestHead => {
-  let {
+export const requestHeadToOptions = requestHead => {
+  const {
     auth,
     hostname,
     port,
@@ -32,17 +32,17 @@ export let requestHeadToOptions = requestHead => {
   }
 }
 
-export let nodeToQuiverResponse = response => {
-  let responseHead = new ResponseHead(response)
+export const nodeToQuiverResponse = response => {
+  const responseHead = new ResponseHead(response)
 
-  let responseStream = nodeToQuiverReadStream(response)
+  const responseStream = nodeToQuiverReadStream(response)
 
   return [responseHead, responseStream]
 }
 
-export let subrequest = (requestHead, requestStream) =>
+export const subrequest = (requestHead, requestStream) =>
   new Promise((resolve, reject) => {
-    let request = http.request(
+    const request = http.request(
       requestHeadToOptions(requestHead), 
       response =>
         resolve(nodeToQuiverResponse(response)))
@@ -52,7 +52,7 @@ export let subrequest = (requestHead, requestStream) =>
       nodeToQuiverWriteStream(request))
   })
 
-export let getRequest = (url, requestStream) =>
+export const getRequest = (url, requestStream) =>
   new Promise((resolve, reject) => {
     http.get(url, response =>
         resolve(nodeToQuiverResponse(response)))

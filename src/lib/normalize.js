@@ -1,4 +1,4 @@
-let commonHeaders = [
+const commonHeaders = [
   'Accept',
   'Accept-Charset',
   'Accept-Encoding',
@@ -82,19 +82,19 @@ let commonHeaders = [
   'X-UA-Compatible'
 ]
 
-export let normalizeTable = commonHeaders.reduce(
+export const normalizeTable = commonHeaders.reduce(
   (table, header) => {
     table[header.toLowerCase()] = header
     return table
   }, {})
 
-let capitalize = str =>
+const capitalize = str =>
   (str[0].toUpperCase() + str.slice(1))
 
-export let normalizeHttpHeader = (header, cache=false) => {
+export const normalizeHttpHeader = (header, cache=false) => {
   if(normalizeTable[header]) return normalizeTable[header]
 
-  let normalized = header.split('-')
+  const normalized = header.split('-')
     .map(capitalize)
     .join('-')
 

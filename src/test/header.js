@@ -1,5 +1,3 @@
-import 'traceur'
-
 import { 
   RequestHead, ResponseHead,
   streamToHttpHandler
@@ -17,12 +15,12 @@ import chai from 'chai'
 import chaiAsPromised from 'chai-as-promised'
 
 chai.use(chaiAsPromised)
-let should = chai.should()
-let expect = chai.expect
+const should = chai.should()
+const expect = chai.expect
 
 describe('http header test', () => {
   it('request head test 1', () => {
-    let requestHead = new RequestHead()
+    const requestHead = new RequestHead()
 
     requestHead.httpVersion.should.equal('1.1')
     requestHead.method.should.equal('GET')
@@ -32,7 +30,7 @@ describe('http header test', () => {
   })
 
   it('request head test 2', () => {
-    let requestHead = new RequestHead({
+    const requestHead = new RequestHead({
       url: '/api/path?foo=bar'
     })
 
@@ -42,7 +40,7 @@ describe('http header test', () => {
   })
 
   it('request head test 3', () => {
-    let requestHead = new RequestHead({
+    const requestHead = new RequestHead({
       url: '/api/path?foo=bar'
     })
 
@@ -55,7 +53,7 @@ describe('http header test', () => {
   })
 
   it('request head test 3', () => {
-    let requestHead = new RequestHead({
+    const requestHead = new RequestHead({
       url: '/api/path?foo=bar'
     })
 
@@ -69,7 +67,7 @@ describe('http header test', () => {
   })
 
   it('request head test 4', () => {
-    let requestHead = new RequestHead({
+    const requestHead = new RequestHead({
       url: '/api/path?foo=bar'
     })
 
@@ -86,7 +84,7 @@ describe('http header test', () => {
   })
 
   it('request head test 5', () => {
-    let requestHead = new RequestHead({
+    const requestHead = new RequestHead({
       url: '/api/path?foo=bar'
     })
 
@@ -105,7 +103,7 @@ describe('http header test', () => {
   })
 
   it('request head test 6', () => {
-    let requestHead = new RequestHead({
+    const requestHead = new RequestHead({
       url: 'http://localhost:8080/api/path?foo=bar'
     })
 
@@ -118,7 +116,7 @@ describe('http header test', () => {
   })
 
   it('request head copy fields test', () => {
-    let requestHead = new RequestHead({
+    const requestHead = new RequestHead({
       url: '/api/path?foo=bar',
       headers: {
         'X-Foo': 'Bar'
@@ -128,7 +126,7 @@ describe('http header test', () => {
     requestHead.getHeader('X-Foo').should.equal('Bar')
     requestHead.getHeader('x-FOO').should.equal('Bar')
 
-    let { headers } = requestHead
+    const { headers } = requestHead
     headers['x-foo'].should.equal('Bar')
 
     headers['x-foo'] = 'BAZ'
@@ -137,7 +135,7 @@ describe('http header test', () => {
   })
 
   it('request head args test', () => {
-    let requestHead = new RequestHead({
+    const requestHead = new RequestHead({
       url: '/api/path?foo=bar',
       headers: {
         'X-Foo': 'Bar'
@@ -146,7 +144,7 @@ describe('http header test', () => {
 
     requestHead.setArgs('foo', 'baz')
 
-    let { args } = requestHead
+    const { args } = requestHead
 
     args.path.should.equal('/api/path')
     args.foo.should.equal('baz')
@@ -155,7 +153,7 @@ describe('http header test', () => {
   })
 
   it('request head error test', () => {
-    let requestHead = new RequestHead({
+    const requestHead = new RequestHead({
       url: '/api/path?foo=bar'
     })
 
@@ -165,7 +163,7 @@ describe('http header test', () => {
   })
 
   it('response head test', () => {
-    let responseHead = new ResponseHead()
+    const responseHead = new ResponseHead()
 
     responseHead.statusCode.should.equal(200)
     responseHead.statusMessage.should.equal('OK')
@@ -186,7 +184,7 @@ describe('http header test', () => {
   })
 
   it('handler convert test', () => {
-    let streamHandler = (args, streamable) => {
+    const streamHandler = (args, streamable) => {
       args.path.should.equal('/api/hello')
       args.requestHead.method.should.equal('POST')
 
@@ -202,9 +200,9 @@ describe('http header test', () => {
         })
     }
 
-    let httpHandler = streamToHttpHandler(streamHandler)
+    const httpHandler = streamToHttpHandler(streamHandler)
 
-    let requestHead = new RequestHead({
+    const requestHead = new RequestHead({
       method: 'POST',
       url: '/api/hello?foo=bar'
     })

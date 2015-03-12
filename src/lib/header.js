@@ -2,58 +2,58 @@ import http from 'http'
 import urlLib from 'url'
 import { copy } from 'quiver-object'
 
-let { 
+const { 
   parse: parseUrl,
   format: formatUrl
 } = urlLib
 
 import qs from 'querystring'
 
-let { 
+const { 
   parse: parseQueryString,
   stringify: queryStringify
 } = qs
 
-let statusCodeTable = http.STATUS_CODES
+const statusCodeTable = http.STATUS_CODES
 
-let getStatusMessage = statusCode =>
+const getStatusMessage = statusCode =>
   (statusCodeTable[statusCode] || 'Unknown')
 
-let assertString = (str) => {
+const assertString = (str) => {
   if(typeof(str) != 'string')
     throw new Error('argument must be string')
 
   return str
 }
 
-let assertNumber = (num) => {
+const assertNumber = (num) => {
   if(typeof(num) != 'number')
     throw new Error('argument must be number')
 
   return num
 }
 
-let assertRegex = (str, regex) => {
+const assertRegex = (str, regex) => {
   if(regex.test(assertString(str)))
     throw new Error('string contains invalid characters')
 
   return str
 }
 
-let fieldRegex = /[^a-zA-Z\-]/
-let valueRegex = /[^\x20-\x7E]/
-let methodRegex = /[^a-zA-Z]/
+const fieldRegex = /[^a-zA-Z\-]/
+const valueRegex = /[^\x20-\x7E]/
+const methodRegex = /[^a-zA-Z]/
 
 class HttpHead {
   constructor(rawHead={}) {
-    let {
+    const {
       httpVersion='1.1'
     } = rawHead
 
     this._httpVersion = httpVersion
 
     if(rawHead.headers) {
-      let rawHeaders = rawHead.headers
+      const rawHeaders = rawHead.headers
 
       this._headers = Object.keys(rawHeaders)
         .reduce((headers, key) => {
@@ -73,7 +73,7 @@ class HttpHead {
   }
 
   setHeader(header, value) {
-    let key = assertRegex(header, fieldRegex).toLowerCase()
+    const key = assertRegex(header, fieldRegex).toLowerCase()
 
     this._headers[key] = assertRegex(value, valueRegex)
 
@@ -95,7 +95,7 @@ class HttpHead {
 
 export class RequestHead extends HttpHead {
   constructor(rawHead={}) {
-    let {
+    const {
       method='GET',
       url='/'
     } = rawHead
@@ -138,7 +138,7 @@ export class RequestHead extends HttpHead {
   }
 
   reformatUrl() {
-    let url = this._url = formatUrl({
+    const url = this._url = formatUrl({
       pathname: this.path,
       search: this.queryString,
       protocol: this.protocol,
@@ -167,7 +167,7 @@ export class RequestHead extends HttpHead {
   get _parsedUrl() {
     if(this.__parsedUrl) return this.__parsedUrl
 
-    let parsed = this.__parsedUrl = parseUrl(this._url)
+    const parsed = this.__parsedUrl = parseUrl(this._url)
     return parsed
   }
 
@@ -192,7 +192,7 @@ export class RequestHead extends HttpHead {
 
   get queryString() {
     if(this._modifiedQuery) {
-      let queryString = this._queryString =
+      const queryString = this._queryString =
         queryStringify(this.__parsedQuery)
 
       this._modifiedQuery = false
@@ -203,7 +203,7 @@ export class RequestHead extends HttpHead {
       return this._queryString
     }
 
-    let queryString = this._queryString =
+    const queryString = this._queryString =
       this._parsedUrl.query || ''
 
     return queryString
@@ -221,7 +221,7 @@ export class RequestHead extends HttpHead {
     if(this.__parsedQuery) 
       return this.__parsedQuery
 
-    let query = this.__parsedQuery = 
+    const query = this.__parsedQuery = 
       parseQueryString(this.queryString)
 
     return query
@@ -252,16 +252,16 @@ export class RequestHead extends HttpHead {
   }
 }
 
-let mixinUrlComponent = (prototype, field, 
+const mixinUrlComponent = (prototype, field, 
   urlField=field, defaultValue=null) => 
 {
-  let _field = '_' + field
+  const _field = '_' + field
 
   Object.defineProperty(prototype, field, {
     get() {
       if(this[_field] !== null) return this[_field]
 
-      let value = this[_field] = 
+      const value = this[_field] = 
         this._parsedUrl[urlField] || defaultValue
 
       return value
@@ -283,7 +283,7 @@ mixinUrlComponent(RequestHead.prototype, 'auth')
 
 export class ResponseHead extends HttpHead {
   constructor(rawHead={}) {
-    let {
+    const {
       statusCode=200,
       statusMessage=getStatusMessage(statusCode)
     } = rawHead

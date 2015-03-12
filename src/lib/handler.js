@@ -12,12 +12,12 @@ import {
   nodeToQuiverWriteStream
 } from 'quiver-stream-util'
 
-export let streamToHttpHandler = streamHandler =>
+export const streamToHttpHandler = streamHandler =>
   (requestHead, requestStreamable) => {
-    let args = requestHead.args
+    const args = requestHead.args
 
-    let contentType = requestHead.getHeader('content-type')
-    let contentLength = requestHead.getHeader('content-length')
+    const contentType = requestHead.getHeader('content-type')
+    const contentLength = requestHead.getHeader('content-length')
 
     if(contentType)
       requestStreamable.contentType = contentType
@@ -27,9 +27,9 @@ export let streamToHttpHandler = streamHandler =>
 
     return streamHandler(args, requestStreamable)
     .then(resultStreamable => {
-      let responseHead = new ResponseHead()
+      const responseHead = new ResponseHead()
 
-      let { 
+      const { 
         contentType, contentLength 
       } = resultStreamable
 
@@ -46,10 +46,10 @@ export let streamToHttpHandler = streamHandler =>
     })
   }
 
-export let httpToNodeHandler = httpHandler =>
+export const httpToNodeHandler = httpHandler =>
 async(function*(request, response) {
   try {
-    let requestHead = new RequestHead({
+    const requestHead = new RequestHead({
       httpVersion: request.httpVersion,
       headers: request.headers,
       method: request.method,
@@ -59,17 +59,17 @@ async(function*(request, response) {
     requestHead.setArgs('clientAddress', 
       request.connection.remoteAddress)
 
-    let requestStreamable = streamToStreamable(
+    const requestStreamable = streamToStreamable(
       nodeToQuiverReadStream(request))
 
-    let [responseHead, responseStreamable] = 
+    const [responseHead, responseStreamable] = 
       yield httpHandler(requestHead, requestStreamable)
 
 
-    let headers = responseHead.headers
+    const headers = responseHead.headers
 
     for(let key in headers) {
-      let normalizedKey = normalizeHttpHeader(key, true)
+      const normalizedKey = normalizeHttpHeader(key, true)
       response.setHeader(normalizedKey, headers[key])
     }
 
@@ -81,19 +81,19 @@ async(function*(request, response) {
     }
 
     if(responseStreamable.toNodeStream) {
-      let nodeRead = yield responseStreamable.toNodeStream()
+      const nodeRead = yield responseStreamable.toNodeStream()
       nodeRead.pipe(response)
 
     } else {
-      let responseStream = yield responseStreamable.toStream()
-      let responseWrite = nodeToQuiverWriteStream(response)
+      const responseStream = yield responseStreamable.toStream()
+      const responseWrite = nodeToQuiverWriteStream(response)
 
       pipeStream(responseStream, responseWrite)
     }
 
   } catch(err) {
     if(!response.headersSents) {
-      let errorCode = err.errorCode || 500
+      const errorCode = err.errorCode || 500
 
       response.writeHead(errorCode, {
         'Content-Length': 0
