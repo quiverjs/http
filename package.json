@@ -6,19 +6,18 @@
   },
   "name": "quiver-http",
   "desription": "Classes to represent HTTP request/response in Quiver",
-  "version": "1.4.1",
+  "version": "2.0.0",
   "homepage": "https://github.com/quiverjs/quiver-http",
   "repository": {
     "url": "git@github.com:quiverjs/quiver-http.git"
   },
   "dependencies": {
-    "quiver-error": "~1.2.1",
-    "quiver-object": "~1.4.1",
-    "quiver-promise": "~1.2.1",
-    "quiver-stream-util": "~1.4.2"
+    "quiver-util": "~1.0.0",
+    "babel-runtime": "^5.8.20",
+    "quiver-stream-util": "~1.4.3"
   },
   "devDependencies": {
-    "babel": "~4.7.12",
+    "babel": "^5.8.20",
     "chai": "^1.10.0",
     "mocha": "^2.1.0",
     "chai-as-promised": "^4.1.1"
