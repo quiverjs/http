@@ -7,20 +7,12 @@ import {
   nodeToQuiverWriteStream
 } from 'quiver-stream-util'
 
-const headerEntries = function*(request) {
-  for(let key of Object.keys(request.headers)) {
-    yield [key, headers[key]]
-  }
-
-  yield [':scheme', 'http']
-  yield [':method', request.method]
-  yield [':path', request.url]
-  yield [':remote-address', request.connection.remoteAddress]
-}
+import { nodeRequestToRequestHead } from './convert'
+import { pipeStreamableToNodeStream } from './pipe'
 
 export const httpToNodeHandler = httpHandler => {
   const handleRequest = async function(request, response) {
-    const requestHead = new RequestHead(headerEntries(request))
+    const requestHead = nodeRequestToRequestHead(request)
 
     const requestStreamable = streamToStreamable(
       nodeToQuiverReadStream(request))
@@ -29,33 +21,24 @@ export const httpToNodeHandler = httpHandler => {
       responseHead, responseStreamable
     ] = await httpHandler(requestHead, requestStreamable)
 
-    for(let [key, value] of responseHead.entries()) {
-      response.setHeader(key, value)
-    }
+    response.writeHead(responseHead.status, response.headerObject())
 
-    response.writeHead(responseHead.status)
-
+    // Disable built in chunked encoding if explicit
+    // Transfer-Encoding header is set
     if(responseHead.getHeader('transfer-encoding') === 'chunked')
       response.chunkedEncoding = false
 
-    if(responseStreamable.toNodeStream) {
-      const nodeRead = await responseStreamable.toNodeStream()
-      nodeRead.pipe(response)
-
-    } else {
-      const responseStream = await responseStreamable.toStream()
-      const responseWrite = nodeToQuiverWriteStream(response)
-
-      pipeStream(responseStream, responseWrite)
-    }
+    await pipeStreamableToNodeStream(responseStreamable, response)
   }
 
   return (request, response) =>
     handleRequest(request, response)
     .catch(err => {
+      // Basic terminating of response on error.
+      // Graceful error handling should be done in HTTP middlewares
       if(!response.headersSents) {
         response.writeHead(500, {
-          'Content-Length': 0
+          'content-length': 0
         })
       }
       response.end()

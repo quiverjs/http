@@ -17,24 +17,19 @@
     "quiver-stream-util": "~1.4.3"
   },
   "devDependencies": {
-    "babel": "^5.8.20",
-    "chai": "^1.10.0",
-    "mocha": "^2.1.0",
-    "chai-as-promised": "^4.1.1"
+    "tape": "^4.0.1",
+    "babel": "^5.8.20"
   },
   "bugs": {
     "url": "https://github.com/quiverjs/quiver-http/issues"
   },
-  "licenses": {
-    "type": "MIT",
-    "url": "https://raw.github.com/quiverjs/license/master/LICENSE"
-  },
+  "licenses": "ISC",
   "main": "./index.js",
   "scripts": {
-    "test": "make unit-test",
+    "test": "make test",
     "prepublish": "make build"
   },
   "engines": {
-    "iojs": "^1.5.1"
+    "iojs": "^3.3.0"
   }
 }

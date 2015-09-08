@@ -67,7 +67,18 @@ export class HttpHead {
     return this[$headers]
   }
 
-  entries() {
-    return this[$headers].entries()
+  *headerEntries() {
+    for(let [key, value] of this[$headers].entries()) {
+      if(key[0] !== ':')
+        yield [key, value]
+    }
+  }
+
+  headerObject() {
+    const header = Object.create(null)
+    for(let [key, value] of this.headerEntries()) {
+      header[key] = value
+    }
+    return header
   }
 }

@@ -1,4 +1,3 @@
-
 const hasUppercaseRegex = /[A-Z]/
 const validHeaderValueRegex = /^[\x20-\x7E]$/
 
@@ -16,8 +15,13 @@ const regNameRegex = `[a-zA-Z\\-\\.\\_\\~` +
 
 const pcharRegex = regNameRegex + `|[\\:\\@]`
 
+const validPathnameRegex = new RegExp(`^/(${pcharRegex})*$`)
+const validSearchRegex = new RegExp(`^?(${pcharRegex})*$`)
 const validPathRegex = new RegExp(`^/(${pcharRegex})*\\??(${pcharRegex})*$`)
+
 const validAuthorityRegex = new RegExp(`^${regNameRegex}+(\\:\\d+)?$/`)
+const validHostnameRegex = new RegExp(`^${regNameRegex}+$/`)
+const validPortRegex = /^\d+$/
 
 export const validateHeaderName = name => {
   if(hasUppercaseRegex.test(name))
@@ -56,4 +60,24 @@ export const validateAuthority = authority => {
 export const validateStatus = status => {
   if(!validStatusRegex.test(status))
     throw new Error('response status contains invalid character')
+}
+
+export const validatePathname = pathname => {
+  if(!validPathnameRegex.test(pathname))
+    throw new Error('request pathname contains invalid character')
+}
+
+export const validateSearch = pathname => {
+  if(!validSearchRegex.test(pathname))
+    throw new Error('request search contains invalid character')
+}
+
+export const validateHostname = hostname => {
+  if(!validHostnameRegex.test(hostname))
+    throw new Error('request hostname contains invalid character')
+}
+
+export const validatePort = port => {
+  if(!validPortRegex.test(port))
+    throw new Error('request port contains invalid character')
 }
