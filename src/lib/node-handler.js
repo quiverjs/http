@@ -1,10 +1,6 @@
-import { Map as ImmutableMap } from 'immutable'
-
 import {
-  pipeStream,
   streamToStreamable,
-  nodeToQuiverReadStream,
-  nodeToQuiverWriteStream
+  nodeToQuiverReadStream
 } from 'quiver-stream-util'
 
 import { nodeRequestToRequestHead } from './convert'
@@ -21,7 +17,7 @@ export const httpToNodeHandler = httpHandler => {
       responseHead, responseStreamable
     ] = await httpHandler(requestHead, requestStreamable)
 
-    response.writeHead(responseHead.status, response.headerObject())
+    response.writeHead(responseHead.status, responseHead.headerObject())
 
     // Disable built in chunked encoding if explicit
     // Transfer-Encoding header is set
@@ -31,9 +27,11 @@ export const httpToNodeHandler = httpHandler => {
     await pipeStreamableToNodeStream(responseStreamable, response)
   }
 
-  return (request, response) =>
-    handleRequest(request, response)
-    .catch(err => {
+  return async (request, response) => {
+    try {
+      await handleRequest(request, response)
+    } catch(err) {
+      console.log('fatal error:', err)
       // Basic terminating of response on error.
       // Graceful error handling should be done in HTTP middlewares
       if(!response.headersSents) {
@@ -42,5 +40,6 @@ export const httpToNodeHandler = httpHandler => {
         })
       }
       response.end()
-    })
+    }
+  }
 }

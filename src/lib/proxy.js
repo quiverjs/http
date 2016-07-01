@@ -1,41 +1,39 @@
-import http from 'http'
+import httpLib from 'http'
+import httpsLib from 'https'
+
+import urlLib from 'url'
 
 import {
-  RequestHead, ResponseHead
-} from './header'
-
-import {
-  pipeStream,
-  nodeReadToStreamable,
-  nodeToQuiverReadStream,
-  nodeToQuiverWriteStream
+  emptyStreamable,
+  nodeReadToStreamable
 } from 'quiver-stream-util'
 
 import {
   requestHeadToRequestOptions,
-  nodeResponseToResponseHead
+  nodeRequestToRequestHead,
+  nodeResponseToResponseHead,
+  urlOptionsToRequestHead
 } from './convert'
 
 import { pipeStreamableToNodeStream } from './pipe'
 
-const doRequest = requestOptions => {
+const performRequest = requestOptions => {
   let request
 
   const promise = new Promise((resolve, reject) => {
-    request = http.request(requestOptions, resolve)
+    request = httpLib.request(requestOptions, resolve)
     request.on('error', reject)
   })
 
   return [request, promise]
 }
 
-export const proxyHttpRequestHandlerBuilder = config => {
-  const agent = config.get('httpAgent') || new http.Agent()
-
-  return async function(requestHead, requestStreamable) {
+export const createProxyHttpRequestHandler = (agent = new httpLib.Agent()) =>
+  async (requestHead, requestStreamable) => {
     const requestOptions = requestHeadToRequestOptions(requestHead)
+    requestOptions.agent = agent
 
-    const [request, promise1] = doRequest(requestOptions)
+    const [request, promise1] = performRequest(requestOptions)
 
     const promise2 = pipeStreamableToNodeStream(requestStreamable, request)
     const [ response ] = await Promise.all([promise1, promise2])
@@ -45,4 +43,12 @@ export const proxyHttpRequestHandlerBuilder = config => {
 
     return [responseHead, responseStreamable]
   }
+
+const subrequest = createProxyHttpRequestHandler()
+
+export const getRequest = async url => {
+  const requestHead = urlOptionsToRequestHead(urlLib.parse(url))
+    .setMethod('GET')
+
+  return subrequest(requestHead, emptyStreamable())
 }

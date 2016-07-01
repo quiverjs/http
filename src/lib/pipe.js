@@ -1,3 +1,7 @@
+import {
+  pipeStream, nodeToQuiverWriteStream
+} from 'quiver-stream-util'
+
 export const pipeStreamableToNodeStream = async function(streamable, nodeWrite) {
   if(streamable.toNodeStream) {
     const nodeRead = await streamable.toNodeStream()

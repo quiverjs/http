@@ -1,19 +1,18 @@
 export {
-  HttpHead, RequestHead, ResponseHead
-} from './header'
+  RequestHead, ResponseHead,
+  ValidatedResponseHead, ValidatedRequestHead
+} from 'quiver-http-head'
 
 export {
-  streamToHttpHandler, httpToNodeHandler
-} from './handler'
+  httpToNodeHandler
+} from './node-handler'
 
 export {
-  normalizeHttpHeader
-} from './normalize'
+  createProxyHttpRequestHandler,
+  subrequest,
+  getRequest
+} from './proxy'
 
 export {
-  subrequest, getRequest
-} from './subrequest'
-
-export {
-  startServer
+  createServer
 } from './server'

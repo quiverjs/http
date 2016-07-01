@@ -1,9 +1,6 @@
-import { async } from 'quiver-promise'
-import { normalizeHttpHeader } from './normalize'
-
 import {
-  RequestHead, ResponseHead
-} from './header'
+  ResponseHead
+} from 'quiver-http-head'
 
 export const streamToHttpHandler = streamHandler =>
   async function(requestHead, requestStreamable) {
