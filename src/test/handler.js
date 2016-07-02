@@ -3,6 +3,7 @@ import { createServer } from 'http'
 
 import { asyncTest } from 'quiver-util/tape'
 import { RequestHead, ResponseHead } from 'quiver-http-head'
+import { createConfig } from 'quiver-component/util'
 import { streamHandler } from 'quiver-component/constructor'
 
 import {
@@ -15,8 +16,7 @@ import {
 import { error } from 'quiver-util/error'
 
 import {
-  streamableToText, textToStreamable,
-  streamToText, textToStream
+  streamableToText, textToStreamable
 } from 'quiver-stream-util'
 
 let testPort = 8100
@@ -50,15 +50,14 @@ test('node handler test', assert => {
     server.close()
     assert.end()
   })
-  return
 
   assert::asyncTest('post request test', async assert => {
     const handler = async (requestHead, streamable) => {
       assert.equal(requestHead.method, 'POST')
-      assert.equal(requestHead.path, '/post-path')
-      assert.equal(requestHead.query.foo, 'bar')
+      assert.equal(requestHead.pathname, '/post-path')
+      assert.equal(requestHead.query.get('foo'), 'bar')
 
-      assert.equal(requestHead.getHeader('Content-Type'), 'text/plain')
+      assert.equal(requestHead.getHeader('content-type'), 'text/plain')
 
       const requestBody = await streamableToText(streamable)
       assert.equal(requestBody, 'Hello')
@@ -78,11 +77,11 @@ test('node handler test', assert => {
       .setHeader('content-type', 'text/plain')
 
     const [responseHead, responseStream] = await subrequest(
-      requestHead, textToStream('Hello'))
+      requestHead, textToStreamable('Hello'))
 
-    assert.equal(responseHead.status, 200)
+    assert.equal(responseHead.status, '200')
 
-    const responseBody = await streamToText(responseStream)
+    const responseBody = await streamableToText(responseStream)
     assert.equal(responseBody, 'Good Bye')
 
     server.close()
@@ -100,9 +99,9 @@ test('node handler test', assert => {
     const [responseHead, responseStream] = await getRequest(
       'http://localhost:' + port + '/')
 
-    assert.equal(responseHead.status, 404)
+    assert.equal(responseHead.status, '404')
 
-    const responseBody = await streamToText(responseStream)
+    const responseBody = await streamableToText(responseStream)
     assert.equal(responseBody, '')
 
     server.close()
@@ -126,17 +125,17 @@ test('node handler test', assert => {
       })
 
     const port = testPort++
-    const config = {
+    const config = createConfig({
       serverListen: port
-    }
-    const server = await startServer(component, config)
+    })
+    const server = await startServer(config, component)
 
     const [responseHead, responseStream] = await getRequest(
       'http://localhost:' + port + '/get-path?foo=bar')
 
-    assert.equal(responseHead.status, 200)
+    assert.equal(responseHead.status, '200')
 
-    const responseBody = await streamToText(responseStream)
+    const responseBody = await streamableToText(responseStream)
     assert.equal(responseBody, 'Hello World')
 
     server.close()

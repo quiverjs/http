@@ -1,13 +1,15 @@
 import { createServer } from 'http'
 
 import {
-  loadHandler, handleableLoader
+  loadHandler, handleableLoader, assertConfig
 } from 'quiver-component/util'
 
 import { httpToNodeHandler } from './node-handler'
 import { streamToHttpHandler } from './stream-handler'
 
 export const startServer = async (config, component) => {
+  assertConfig(config)
+
   if(!component.isHandlerComponent) {
     throw new Error('First argument must be handler component')
   }
@@ -15,7 +17,7 @@ export const startServer = async (config, component) => {
   const serverListen = config.get('serverListen', 8080)
 
   const handleable = await loadHandler(config, component, {
-    handlerLoader: handleableLoader
+    loader: handleableLoader
   })
 
   const streamHandler = handleable.get('streamHandler')

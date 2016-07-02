@@ -17,7 +17,9 @@ export const httpToNodeHandler = httpHandler => {
       responseHead, responseStreamable
     ] = await httpHandler(requestHead, requestStreamable)
 
-    response.writeHead(responseHead.status, responseHead.headerObject())
+    const { status=200 } = responseHead
+
+    response.writeHead(status, responseHead.headerObject())
 
     // Disable built in chunked encoding if explicit
     // Transfer-Encoding header is set
@@ -31,11 +33,11 @@ export const httpToNodeHandler = httpHandler => {
     try {
       await handleRequest(request, response)
     } catch(err) {
-      console.log('fatal error:', err)
       // Basic terminating of response on error.
       // Graceful error handling should be done in HTTP middlewares
+      const status = err.code || 500
       if(!response.headersSents) {
-        response.writeHead(500, {
+        response.writeHead(status, {
           'content-length': 0
         })
       }

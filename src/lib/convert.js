@@ -13,51 +13,68 @@ const responseHeaders = function*(response) {
   }
 }
 
-export const urlOptionsToRequestHead = (urlOptions, requestHead = new RequestHead()) => {
+const setScheme = function(options) {
+  let requestHead = this
+  const { protocol } = options
+
+  if(!protocol) {
+    return requestHead.setScheme('http')
+  } else {
+    // omit colon (:) presence at the end
+    return requestHead.setScheme(protocol.replace(':', ''))
+  }
+}
+
+const setHost = function(options) {
+  let requestHead = this
+  const { host, hostname, port } = options
+
+  if(host) return requestHead.setAuthority(host)
+
+  if(hostname) {
+    requestHead = requestHead.setHostname(hostname)
+  }
+
+  if(port) {
+    requestHead = requestHead.setPort(port)
+  }
+
+  return requestHead
+}
+
+const setPath = function(options) {
+  let requestHead = this
   const {
-    protocol='http:',
+    path, pathname, search, query
+  } = options
 
-    host,
-    path,
+  if(path) return requestHead.setPath(path)
 
-    hostname='localhost',
-    port=80,
-    pathname='/',
-    search='',
-    query=''
-
-  } = urlOptions
-
-  if(protocol) {
-    requestHead = requestHead.setScheme(protocol.slice(0, -1))
+  if(pathname) {
+    requestHead = requestHead.setPathname(pathname)
   }
 
-  if(host) {
-    requestHead = requestHead.setAuthority(host)
-  } else {
-    if(hostname) {
-      requestHead = requestHead.setHostname(hostname)
-    }
-
-    if(port) {
-      requestHead = requestHead.setPort(port)
-    }
+  if(search) {
+    requestHead = requestHead.setSearch(search)
+  } else if(query) {
+    requestHead = requestHead.setQuery(query)
   }
 
-  if(path) {
-    requestHead = requestHead.setPath(path)
-  } else {
-    if(pathname) {
-      requestHead = requestHead.setPathname(pathname)
-    }
+  return requestHead
+}
 
-    if(search) {
-      requestHead = requestHead.setSearch(search)
-    }
+export const setUrlOptions = function(options) {
+  return this
+    ::setScheme(options)
+    ::setHost(options)
+    ::setPath(options)
+}
 
-    if(query) {
-      requestHead = requestHead.setQuery(query)
-    }
+const setHeaders = function(rawHeaders) {
+  let requestHead = this
+
+  for(const [header, value] of entries(rawHeaders)) {
+    requestHead = requestHead.setHeader(header.toLowerCase(), value)
   }
 
   return requestHead
@@ -70,26 +87,27 @@ export const nodeRequestToRequestHead = request => {
     headers={}
   } = request
 
-  let requestHead = urlOptionsToRequestHead(parseUrl(url))
+  const urlOptions = parseUrl(url)
+
+  return new RequestHead()
     .setMethod(method)
-
-  for(const [header, value] of entries(headers)) {
-    requestHead = requestHead.setHeader(header.toLowerCase(), value)
-  }
-
-  return requestHead
+    ::setUrlOptions(urlOptions)
+    ::setHeaders(headers)
 }
 
-export const nodeResponseToResponseHead = response =>
-  new ResponseHead({
-    rawHeaders: ImmutableMap(responseHeaders(response))
-  })
+export const nodeResponseToResponseHead = response => {
+  const { statusCode, headers={} } = response
+
+  return new ResponseHead()
+    .setStatus(statusCode)
+    ::setHeaders(headers)
+}
 
 export const requestHeadToRequestOptions = requestHead => {
   const rawHeaders = requestHead.headerObject()
 
   const {
-    scheme,
+    scheme='http',
     hostname,
     port,
     method,

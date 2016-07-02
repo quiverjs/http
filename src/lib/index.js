@@ -14,5 +14,5 @@ export {
 } from './proxy'
 
 export {
-  createServer
+  startServer
 } from './server'

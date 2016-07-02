@@ -1,7 +1,9 @@
 import httpLib from 'http'
 import httpsLib from 'https'
 
-import urlLib from 'url'
+import { parse as parseUrl } from 'url'
+
+import { RequestHead } from 'quiver-http-head'
 
 import {
   emptyStreamable,
@@ -12,7 +14,7 @@ import {
   requestHeadToRequestOptions,
   nodeRequestToRequestHead,
   nodeResponseToResponseHead,
-  urlOptionsToRequestHead
+  setUrlOptions
 } from './convert'
 
 import { pipeStreamableToNodeStream } from './pipe'
@@ -44,11 +46,12 @@ export const createProxyHttpRequestHandler = (agent = new httpLib.Agent()) =>
     return [responseHead, responseStreamable]
   }
 
-const subrequest = createProxyHttpRequestHandler()
+export const subrequest = createProxyHttpRequestHandler()
 
 export const getRequest = async url => {
-  const requestHead = urlOptionsToRequestHead(urlLib.parse(url))
+  const requestHead = new RequestHead()
     .setMethod('GET')
+    ::setUrlOptions(parseUrl(url))
 
   return subrequest(requestHead, emptyStreamable())
 }

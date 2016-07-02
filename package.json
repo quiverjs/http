@@ -14,7 +14,7 @@
   "dependencies": {
     "quiver-util": "~1.2.1",
     "quiver-component": "^3.0.3",
-    "quiver-http-head": "^1.0.2",
+    "quiver-http-head": "^1.0.3",
     "quiver-stream-util": "~1.4.6"
   },
   "devDependencies": {
