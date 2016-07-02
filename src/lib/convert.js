@@ -1,17 +1,7 @@
 import { parse as parseUrl } from 'url'
 import { entries } from 'quiver-util/object'
-import { ImmutableMap } from 'quiver-util/immutable'
 
 import { RequestHead, ResponseHead } from 'quiver-http-head'
-
-const responseHeaders = function*(response) {
-  yield [':status', response.statusCode.toString()]
-
-  const { headers={} } = response
-  for(let key of Object.keys(headers)) {
-    yield [key.toLowerCase(), headers[key]]
-  }
-}
 
 const setScheme = function(options) {
   let requestHead = this

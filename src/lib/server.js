@@ -1,11 +1,11 @@
 import { createServer } from 'http'
 
 import {
-  loadHandler, handleableLoader, assertConfig
+  loadHandler, handleableLoader,
+  assertConfig, streamToHttpHandler
 } from 'quiver-component/util'
 
 import { httpToNodeHandler } from './node-handler'
-import { streamToHttpHandler } from './stream-handler'
 
 export const startServer = async (config, component) => {
   assertConfig(config)

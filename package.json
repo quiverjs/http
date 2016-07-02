@@ -12,9 +12,9 @@
     "url": "git@github.com:quiverjs/quiver-http.git"
   },
   "dependencies": {
-    "quiver-util": "~1.2.1",
+    "quiver-util": "~1.2.3",
     "quiver-component": "^3.0.3",
-    "quiver-http-head": "^1.0.3",
+    "quiver-http-head": "^1.0.4",
     "quiver-stream-util": "~1.4.6"
   },
   "devDependencies": {

@@ -12,7 +12,6 @@ import {
 
 import {
   requestHeadToRequestOptions,
-  nodeRequestToRequestHead,
   nodeResponseToResponseHead,
   setUrlOptions
 } from './convert'

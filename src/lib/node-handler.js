@@ -42,6 +42,9 @@ export const httpToNodeHandler = httpHandler => {
         })
       }
       response.end()
+
+      // Throw fatal 500 error to get caught by unhandled rejection handler
+      if(status === 500) throw err
     }
   }
 }
