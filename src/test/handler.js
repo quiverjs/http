@@ -141,4 +141,15 @@ test('node handler test', assert => {
     server.close()
     assert.end()
   })
+
+  assert::asyncTest('https client test', async assert => {
+    // Test that https subrequests are working.
+    const [responseHead, responseStreamable] = await getRequest(
+      'https://nodejs.org/en/')
+
+    const responseBody = await streamableToText(responseStreamable)
+    assert.ok(responseBody)
+
+    assert.end()
+  })
 })

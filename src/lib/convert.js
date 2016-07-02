@@ -63,7 +63,10 @@ export const setUrlOptions = function(options) {
 const setHeaders = function(rawHeaders) {
   let requestHead = this
 
-  for(const [header, value] of entries(rawHeaders)) {
+  for(let [header, value] of entries(rawHeaders)) {
+    if(Array.isArray(value)) {
+      value = value.join(' ')
+    }
     requestHead = requestHead.setHeader(header.toLowerCase(), value)
   }
 

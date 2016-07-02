@@ -1,5 +1,12 @@
-import httpLib from 'http'
-import httpsLib from 'https'
+import {
+  request as httpRequest,
+  Agent as HttpAgent
+} from 'http'
+
+import {
+  request as httpsRequest,
+  Agent as HttpsAgent
+} from 'https'
 
 import { parse as parseUrl } from 'url'
 
@@ -10,6 +17,8 @@ import {
   nodeReadToStreamable
 } from 'quiver-stream-util'
 
+import { createConfig } from 'quiver-component/util'
+
 import {
   requestHeadToRequestOptions,
   nodeResponseToResponseHead,
@@ -18,23 +27,32 @@ import {
 
 import { pipeStreamableToNodeStream } from './pipe'
 
-const performRequest = requestOptions => {
+const performRequest = (requestOptions, requestFunc) => {
+  const { protocol } = requestOptions
+
   let request
 
   const promise = new Promise((resolve, reject) => {
-    request = httpLib.request(requestOptions, resolve)
+    request = requestFunc(requestOptions, resolve)
     request.on('error', reject)
   })
 
   return [request, promise]
 }
 
-export const createProxyHttpRequestHandler = (agent = new httpLib.Agent()) =>
-  async (requestHead, requestStreamable) => {
-    const requestOptions = requestHeadToRequestOptions(requestHead)
-    requestOptions.agent = agent
+export const createProxyHttpRequestHandler = (config) => {
+  const httpAgent = config.get('httpAgent') || new HttpAgent()
+  const httpsAgent = config.get('httpsAgent') || new HttpsAgent()
 
-    const [request, promise1] = performRequest(requestOptions)
+  return async (requestHead, requestStreamable) => {
+    const isHttps = requestHead.scheme === 'https'
+    const requestFunc = isHttps ? httpsRequest : httpRequest
+    const requestAgent = isHttps ? httpsAgent : httpAgent
+
+    const requestOptions = requestHeadToRequestOptions(requestHead)
+    requestOptions.agent = requestAgent
+
+    const [request, promise1] = performRequest(requestOptions, requestFunc)
 
     const promise2 = pipeStreamableToNodeStream(requestStreamable, request)
     const [ response ] = await Promise.all([promise1, promise2])
@@ -44,8 +62,9 @@ export const createProxyHttpRequestHandler = (agent = new httpLib.Agent()) =>
 
     return [responseHead, responseStreamable]
   }
+}
 
-export const subrequest = createProxyHttpRequestHandler()
+export const subrequest = createProxyHttpRequestHandler(createConfig())
 
 export const getRequest = async url => {
   const requestHead = new RequestHead()
