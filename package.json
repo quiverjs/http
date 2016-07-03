@@ -6,7 +6,7 @@
   },
   "name": "quiver-http",
   "desription": "Tools to setup HTTP server from quiver components",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "homepage": "https://github.com/quiverjs/quiver-http",
   "repository": {
     "url": "git@github.com:quiverjs/quiver-http.git"

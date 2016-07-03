@@ -1,2 +1,2 @@
 'use strict'
-module.exports = require('./dist/lib/http.js')
+module.exports = require('./dist/lib')
