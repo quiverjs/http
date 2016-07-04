@@ -7,14 +7,12 @@ import {
 
 import { httpToNodeHandler } from './node-handler'
 
-export const startServer = async (config, component) => {
+export const loadNodeHandler = async (config, component) => {
   assertConfig(config)
 
   if(!component.isHandlerComponent) {
     throw new Error('First argument must be handler component')
   }
-
-  const serverListen = config.get('serverListen', 8080)
 
   const handleable = await loadHandler(config, component, {
     loader: handleableLoader
@@ -30,6 +28,14 @@ export const startServer = async (config, component) => {
     streamToHttpHandler(streamHandler)
 
   const nodeHandler = httpToNodeHandler(handler)
+
+  return nodeHandler
+}
+
+export const startServer = async (config, component) => {
+  const nodeHandler = await loadNodeHandler(config, component)
+  
+  const serverListen = config.get('serverListen', 8080)
 
   return createServer(nodeHandler)
     .listen(serverListen)

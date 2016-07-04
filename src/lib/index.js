@@ -14,5 +14,5 @@ export {
 } from './proxy'
 
 export {
-  startServer
+  startServer, loadNodeHandler
 } from './server'
