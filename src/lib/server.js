@@ -34,7 +34,7 @@ export const loadNodeHandler = async (config, component) => {
 
 export const startServer = async (config, component) => {
   const nodeHandler = await loadNodeHandler(config, component)
-  
+
   const serverListen = config.get('serverListen', 8080)
 
   return createServer(nodeHandler)

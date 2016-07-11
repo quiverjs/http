@@ -16,3 +16,5 @@ export {
 export {
   startServer, loadNodeHandler
 } from './server'
+
+export { pipeStreamableToNodeStream } from './pipe'
