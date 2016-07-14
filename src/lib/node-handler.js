@@ -35,7 +35,11 @@ export const httpToNodeHandler = httpHandler => {
     } catch(err) {
       // Basic terminating of response on error.
       // Graceful error handling should be done in HTTP middlewares
-      const status = err.code || 500
+      let status = err.code|0
+      if(status < 100 || status > 999) {
+        status = 500
+      }
+
       if(!response.headersSents) {
         response.writeHead(status, {
           'content-length': 0
