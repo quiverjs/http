@@ -1,10 +1,10 @@
 import {
   streamToStreamable,
-  nodeToQuiverReadStream
+  nodeToQuiverReadStream,
+  pipeStreamableToNodeStream
 } from 'quiver-stream-util'
 
 import { nodeRequestToRequestHead } from './convert'
-import { pipeStreamableToNodeStream } from './pipe'
 
 export const httpToNodeHandler = httpHandler => {
   const handleRequest = async function(request, response) {

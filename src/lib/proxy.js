@@ -14,7 +14,8 @@ import { RequestHead } from 'quiver-http-head'
 
 import {
   emptyStreamable,
-  nodeReadToStreamable
+  nodeReadToStreamable,
+  pipeStreamableToNodeStream
 } from 'quiver-stream-util'
 
 import { createConfig } from 'quiver-component/util'
@@ -24,8 +25,6 @@ import {
   nodeResponseToResponseHead,
   setUrlOptions
 } from './convert'
-
-import { pipeStreamableToNodeStream } from './pipe'
 
 const performRequest = (requestOptions, requestFunc) => {
   const { protocol } = requestOptions

@@ -17,4 +17,9 @@ export {
   startServer, loadNodeHandler
 } from './server'
 
-export { pipeStreamableToNodeStream } from './pipe'
+export {
+  setUrl, setUrlOptions,
+  nodeRequestToRequestHead,
+  nodeResponseToResponseHead,
+  requestHeadToRequestOptions
+} from './convert'

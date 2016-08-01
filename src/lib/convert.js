@@ -60,6 +60,10 @@ export const setUrlOptions = function(options) {
     ::setPath(options)
 }
 
+export const setUrl = function(url) {
+  return this::setUrlOptions(parseUrl(url))
+}
+
 const setHeaders = function(rawHeaders) {
   let requestHead = this
 
