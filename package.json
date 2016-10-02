@@ -6,21 +6,21 @@
   },
   "name": "quiver-http",
   "desription": "Tools to setup HTTP server from quiver components",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "homepage": "https://github.com/quiverjs/quiver-http",
   "repository": {
     "url": "git@github.com:quiverjs/quiver-http.git"
   },
   "dependencies": {
-    "quiver-util": "^1.2.5",
+    "quiver-util": "^1.2.6",
     "quiver-component": "^3.1.0",
     "quiver-http-head": "^1.0.4",
     "quiver-stream-util": "^1.5.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.11.4",
+    "babel-cli": "^6.16.0",
     "quiver-babel": "^1.0.3",
-    "tape": "^4.6.0"
+    "tape": "^4.6.2"
   },
   "bugs": {
     "url": "https://github.com/quiverjs/quiver-http/issues"
@@ -32,6 +32,6 @@
     "prepublish": "make build"
   },
   "engines": {
-    "node": "^6.2.2"
+    "node": "^6.7.0"
   }
 }

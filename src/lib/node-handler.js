@@ -1,3 +1,5 @@
+import { errorToStatusCode } from 'quiver-util/error'
+
 import {
   streamToStreamable,
   nodeToQuiverReadStream,
@@ -35,10 +37,7 @@ export const httpToNodeHandler = httpHandler => {
     } catch(err) {
       // Basic terminating of response on error.
       // Graceful error handling should be done in HTTP middlewares
-      let status = err.code|0
-      if(status < 100 || status > 999) {
-        status = 500
-      }
+      const status = errorToStatusCode(err)
 
       if(!response.headersSents) {
         response.writeHead(status, {
@@ -48,7 +47,7 @@ export const httpToNodeHandler = httpHandler => {
       response.end()
 
       // Throw fatal 500 error to get caught by unhandled rejection handler
-      if(status === 500) throw err
+      if(status >= 500) throw err
     }
   }
 }
